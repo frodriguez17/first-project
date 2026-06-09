@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AmeriSave Mortgage — Low Rates, Fast Close</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #0A2463;
+      --navy-d:  #061740;
+      --blue:    #1B4FD8;
+      --sky:     #3B82F6;
+      --gold:    #D4A017;
+      --gold-l:  #F5C842;
+      --green:   #16A34A;
+      --white:   #FFFFFF;
+      --off-white: #F8FAFF;
+      --gray-50:  #F1F5F9;
+      --gray-200: #E2E8F0;
+      --gray-400: #94A3B8;
+      --gray-600: #475569;
+      --gray-800: #1E293B;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
+      --shadow-md: 0 4px 16px rgba(10,36,99,.12);
+      --shadow-lg: 0 12px 40px rgba(10,36,99,.18);
+      --radius:   12px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body  { font-family: 'Inter', sans-serif; color: var(--gray-800); background: var(--white); overflow-x: hidden; }
+
+    /* ── NAV ─────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%; height: 72px;
+      background: rgba(255,255,255,.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-200);
+      box-shadow: var(--shadow-sm);
+    }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon {
+      width: 38px; height: 38px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon svg { width: 22px; height: 22px; fill: var(--white); }
+    .logo-text { font-size: 1.25rem; font-weight: 800; color: var(--navy); letter-spacing: -.3px; }
+    .logo-text span { color: var(--sky); }
+
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { text-decoration: none; font-size: .9rem; font-weight: 500; color: var(--gray-600); transition: color .2s; }
+    .nav-links a:hover { color: var(--navy); }
+
+    .nav-cta { display: flex; gap: 12px; align-items: center; }
+    .btn-ghost { padding: 8px 18px; border: 1.5px solid var(--gray-200); border-radius: 8px; font-size: .875rem; font-weight: 600; color: var(--gray-600); background: none; cursor: pointer; transition: all .2s; }
+    .btn-ghost:hover { border-color: var(--navy); color: var(--navy); }
+    .btn-primary { padding: 10px 22px; border: none; border-radius: 8px; font-size: .875rem; font-weight: 700; color: var(--white); background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%); cursor: pointer; transition: all .2s; box-shadow: 0 2px 8px rgba(27,79,216,.35); }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(27,79,216,.4); }
+
+    /* ── HERO ────────────────────────────────────── */
+    .hero {
+      min-height: calc(100vh - 72px);
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 48px;
+      padding: 72px 5% 60px;
+      background: linear-gradient(160deg, var(--off-white) 0%, #EEF4FF 50%, var(--white) 100%);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute;
+      width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(59,130,246,.07) 0%, transparent 70%);
+      top: -200px; right: -100px; pointer-events: none;
+    }
+
+    .hero-label {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(27,79,216,.08); color: var(--blue);
+      border: 1px solid rgba(27,79,216,.15);
+      padding: 5px 12px; border-radius: 100px;
+      font-size: .78rem; font-weight: 600; letter-spacing: .3px;
+      margin-bottom: 20px;
+    }
+    .hero-label::before { content: '●'; font-size: .5rem; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      font-weight: 800; line-height: 1.12;
+      color: var(--navy); margin-bottom: 20px;
+    }
+    .hero h1 em { font-style: normal; color: var(--sky); }
+
+    .hero-sub { font-size: 1.05rem; color: var(--gray-600); line-height: 1.65; max-width: 480px; margin-bottom: 36px; }
+
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 40px; }
+    .btn-hero { padding: 14px 28px; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all .25s; border: none; }
+    .btn-hero-primary { background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%); color: var(--white); box-shadow: 0 4px 20px rgba(27,79,216,.35); }
+    .btn-hero-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(27,79,216,.45); }
+    .btn-hero-outline { background: var(--white); color: var(--navy); border: 2px solid var(--navy) !important; }
+    .btn-hero-outline:hover { background: var(--navy); color: var(--white); }
+
+    .trust-badges { display: flex; gap: 24px; flex-wrap: wrap; }
+    .badge { display: flex; align-items: center; gap: 8px; font-size: .82rem; color: var(--gray-600); font-weight: 500; }
+    .badge svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    /* Rate card */
+    .hero-right { position: relative; display: flex; flex-direction: column; gap: 16px; }
+    .rate-card {
+      background: var(--white); border-radius: 20px;
+      padding: 28px 32px; box-shadow: var(--shadow-lg);
+      border: 1px solid var(--gray-200);
+    }
+    .rate-card-title { font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .8px; color: var(--gray-400); margin-bottom: 18px; }
+    .rate-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--gray-50); }
+    .rate-row:last-child { border: none; }
+    .rate-label { font-size: .9rem; color: var(--gray-600); }
+    .rate-value { font-size: 1.5rem; font-weight: 800; color: var(--navy); }
+    .rate-value span { font-size: .8rem; font-weight: 500; color: var(--green); }
+    .rate-badge { background: var(--green); color: var(--white); font-size: .7rem; font-weight: 700; padding: 3px 8px; border-radius: 100px; }
+
+    /* ── PRODUCT CARDS ───────────────────────────── */
+    .products {
+      padding: 96px 5%;
+      background: var(--white);
+    }
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-label {
+      display: inline-block; font-size: .78rem; font-weight: 700;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--sky); margin-bottom: 12px;
+    }
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 800;
+      color: var(--navy); line-height: 1.2; margin-bottom: 14px;
+    }
+    .section-header p { font-size: 1rem; color: var(--gray-600); max-width: 560px; margin: 0 auto; line-height: 1.65; }
+
+    .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+    /* ── CASH-OUT CARD (special) ─────────────────── */
+    .product-card {
+      position: relative; border-radius: 20px; overflow: hidden;
+      background: var(--white); border: 1.5px solid var(--gray-200);
+      padding: 36px 32px 32px; cursor: pointer;
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    }
+    .product-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .product-card.cashout { border-color: var(--gold); background: linear-gradient(160deg, #FFFBEC 0%, var(--white) 60%); }
+    .product-card.cashout:hover { border-color: var(--gold-l); }
+
+    .card-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .card-icon svg { width: 28px; height: 28px; }
+    .card-icon-blue  { background: rgba(27,79,216,.1); }
+    .card-icon-green { background: rgba(22,163,74,.1); }
+    .card-icon-gold  { background: rgba(212,160,23,.15); }
+
+    .product-card h3 { font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+    .product-card p  { font-size: .9rem; color: var(--gray-600); line-height: 1.6; margin-bottom: 20px; }
+    .card-link { font-size: .875rem; font-weight: 700; color: var(--blue); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: gap .2s; }
+    .card-link:hover { gap: 10px; }
+    .card-link svg { width: 16px; height: 16px; transition: transform .2s; }
+    .card-link:hover svg { transform: translateX(3px); }
+
+    /* ── CASH ANIMATION STAGE ────────────────────── */
+    .cashout-stage {
+      position: absolute; inset: 0; pointer-events: none;
+      overflow: hidden; border-radius: 19px;
+    }
+    /* The house SVG sits at bottom-center */
+    .house-wrap {
+      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 160px; opacity: 0; transition: opacity .35s .1s;
+    }
+    .product-card.cashout:hover .house-wrap { opacity: 1; }
+
+    /* Bills */
+    .bill {
+      position: absolute;
+      width: 44px; height: 20px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, #3EA842 0%, #2d7a30 100%);
+      border: 1.5px solid rgba(0,0,0,.18);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 800; color: rgba(255,255,255,.9);
+      letter-spacing: .5px;
+      opacity: 0;
+      bottom: 48px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+    .bill::before {
+      content: '';
+      position: absolute; inset: 3px;
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 2px;
+    }
+
+    /* Each bill gets its own path via custom properties */
+    .product-card.cashout:hover .bill { animation: flyBill var(--dur, .8s) var(--delay, 0s) ease-out forwards; }
+
+    @keyframes flyBill {
+      0%   { opacity: 0; transform: translate(var(--sx,0px), 0px) rotate(var(--sr,0deg)) scale(.5); }
+      15%  { opacity: 1; }
+      80%  { opacity: .9; }
+      100% { opacity: 0; transform: translate(var(--ex,20px), var(--ey,-120px)) rotate(var(--er,20deg)) scale(1); }
+    }
+
+    /* Bill positions & trajectories */
+    .bill:nth-child(1)  { left:42%; --sx:-8px; --ex:-55px; --ey:-110px; --sr:-5deg; --er:-30deg; --dur:.9s; --delay:.05s; }
+    .bill:nth-child(2)  { left:48%; --sx:0px;  --ex:10px;  --ey:-130px; --sr:3deg;  --er:8deg;  --dur:.85s;--delay:.15s; }
+    .bill:nth-child(3)  { left:54%; --sx:8px;  --ex:60px;  --ey:-105px; --sr:5deg;  --er:32deg; --dur:.95s;--delay:.08s; }
+    .bill:nth-child(4)  { left:38%; --sx:-5px; --ex:-80px; --ey:-90px;  --sr:-8deg; --er:-45deg;--dur:.8s; --delay:.2s;  }
+    .bill:nth-child(5)  { left:56%; --sx:5px;  --ex:85px;  --ey:-88px;  --sr:8deg;  --er:42deg; --dur:.88s;--delay:.22s; }
+    .bill:nth-child(6)  { left:45%; --sx:-3px; --ex:-30px; --ey:-145px; --sr:-2deg; --er:-18deg;--dur:.92s;--delay:.35s; }
+    .bill:nth-child(7)  { left:50%; --sx:0px;  --ex:5px;   --ey:-155px; --sr:1deg;  --er:4deg;  --dur:.75s;--delay:.4s;  }
+    .bill:nth-child(8)  { left:44%; --sx:-6px; --ex:-45px; --ey:-100px; --sr:-4deg; --er:-25deg;--dur:.82s;--delay:.5s;  }
+    .bill:nth-child(9)  { left:52%; --sx:6px;  --ex:50px;  --ey:-115px; --sr:6deg;  --er:28deg; --dur:.87s;--delay:.45s; }
+    .bill:nth-child(10) { left:47%; --sx:-2px; --ex:-15px; --ey:-140px; --sr:-1deg; --er:-12deg;--dur:.78s;--delay:.55s; }
+
+    /* Coins */
+    .coin {
+      position: absolute; bottom: 50px;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, var(--gold-l) 0%, var(--gold) 60%, #9a7010 100%);
+      border: 1.5px solid rgba(0,0,0,.2);
+      opacity: 0;
+      box-shadow: 0 1px 4px rgba(0,0,0,.3), inset 0 1px 2px rgba(255,255,255,.4);
+    }
+    .product-card.cashout:hover .coin { animation: flyCoin var(--cdur,.7s) var(--cdelay,0s) ease-out forwards; }
+
+    @keyframes flyCoin {
+      0%   { opacity: 0; transform: translate(var(--csx,0),0) scale(.4); }
+      20%  { opacity: 1; }
+      85%  { opacity: .8; }
+      100% { opacity: 0; transform: translate(var(--cex,10px),var(--cey,-80px)) rotate(var(--cer,360deg)) scale(1); }
+    }
+
+    .coin:nth-child(11) { left:43%; --csx:-5px; --cex:-35px; --cey:-75px; --cer:-270deg; --cdur:.65s; --cdelay:.1s;  }
+    .coin:nth-child(12) { left:50%; --csx:0px;  --cex:8px;   --cey:-90px; --cer:360deg;  --cdur:.7s;  --cdelay:.25s; }
+    .coin:nth-child(13) { left:55%; --csx:5px;  --cex:40px;  --cey:-70px; --cer:270deg;  --cdur:.6s;  --cdelay:.38s; }
+    .coin:nth-child(14) { left:40%; --csx:-8px; --cex:-55px; --cey:-60px; --cer:-360deg; --cdur:.68s; --cdelay:.48s; }
+    .coin:nth-child(15) { left:57%; --csx:7px;  --cex:62px;  --cey:-65px; --cer:360deg;  --cdur:.62s; --cdelay:.58s; }
+
+    /* Shimmer on card hover */
+    .cashout .card-highlight {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, transparent 30%, rgba(212,160,23,.06) 50%, transparent 70%);
+      opacity: 0; transition: opacity .3s;
+    }
+    .cashout:hover .card-highlight { opacity: 1; }
+
+    /* ── STATS ───────────────────────────────────── */
+    .stats {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-d) 100%);
+      padding: 72px 5%;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    }
+    .stat { text-align: center; padding: 24px; }
+    .stat-value { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 800; color: var(--white); margin-bottom: 6px; }
+    .stat-value span { color: var(--gold-l); }
+    .stat-label { font-size: .85rem; color: rgba(255,255,255,.6); font-weight: 500; }
+
+    /* ── HOW IT WORKS ────────────────────────────── */
+    .how {
+      padding: 96px 5%; background: var(--off-white);
+    }
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-top: 56px; }
+    .step { text-align: center; }
+    .step-num {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      color: var(--white); font-size: 1.2rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px; position: relative;
+    }
+    .step-num::after {
+      content: ''; position: absolute;
+      left: 100%; top: 50%; transform: translateY(-50%);
+      width: 100%; height: 2px;
+      background: repeating-linear-gradient(90deg, var(--gray-200) 0, var(--gray-200) 6px, transparent 6px, transparent 12px);
+    }
+    .steps .step:last-child .step-num::after { display: none; }
+    .step h4 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .step p  { font-size: .875rem; color: var(--gray-600); line-height: 1.6; }
+
+    /* ── TESTIMONIALS ────────────────────────────── */
+    .testimonials { padding: 96px 5%; background: var(--white); }
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .testi-card {
+      background: var(--off-white); border-radius: 16px;
+      padding: 28px 24px; border: 1px solid var(--gray-200);
+    }
+    .stars { color: var(--gold); font-size: 1rem; margin-bottom: 12px; letter-spacing: 2px; }
+    .testi-card p { font-size: .9rem; color: var(--gray-600); line-height: 1.65; margin-bottom: 20px; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 10px; }
+    .avatar { width: 38px; height: 38px; border-radius: 50%; font-size: .85rem; font-weight: 700; color: var(--white); display: flex; align-items: center; justify-content: center; }
+    .av-blue  { background: linear-gradient(135deg,#1B4FD8,#3B82F6); }
+    .av-green { background: linear-gradient(135deg,#16A34A,#22C55E); }
+    .av-navy  { background: linear-gradient(135deg,#0A2463,#1B4FD8); }
+    .testi-author strong { font-size: .875rem; font-weight: 700; color: var(--navy); display: block; }
+    .testi-author span   { font-size: .775rem; color: var(--gray-400); }
+
+    /* ── CTA BANNER ──────────────────────────────── */
+    .cta-banner {
+      margin: 0 5% 80px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      border-radius: 24px; padding: 64px 56px;
+      display: flex; justify-content: space-between; align-items: center; gap: 32px;
+      box-shadow: var(--shadow-lg);
+    }
+    .cta-banner h2 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 800; color: var(--white); margin-bottom: 10px; }
+    .cta-banner p  { color: rgba(255,255,255,.7); font-size: .95rem; max-width: 480px; line-height: 1.6; }
+    .btn-cta { padding: 14px 32px; border-radius: 10px; font-size: 1rem; font-weight: 700; background: var(--gold); color: var(--navy-d); border: none; cursor: pointer; transition: all .25s; white-space: nowrap; box-shadow: 0 4px 20px rgba(212,160,23,.4); }
+    .btn-cta:hover { background: var(--gold-l); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212,160,23,.5); }
+
+    /* ── FOOTER ──────────────────────────────────── */
+    footer {
+      background: var(--navy-d); color: rgba(255,255,255,.7);
+      padding: 56px 5% 32px;
+    }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+    .footer-brand p { font-size: .875rem; line-height: 1.7; margin-top: 14px; max-width: 260px; }
+    .footer-col h5 { font-size: .875rem; font-weight: 700; color: var(--white); margin-bottom: 16px; letter-spacing: .3px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a  { color: rgba(255,255,255,.6); text-decoration: none; font-size: .85rem; transition: color .2s; }
+    .footer-col a:hover { color: var(--white); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: .78rem; gap: 16px; flex-wrap: wrap; }
+    .footer-bottom a { color: rgba(255,255,255,.5); text-decoration: none; }
+    .footer-bottom a:hover { color: var(--white); }
+    .nmls { background: rgba(255,255,255,.08); padding: 3px 10px; border-radius: 4px; font-size: .75rem; }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 1024px) {
+      .product-grid { grid-template-columns: 1fr 1fr; }
+      .stats        { grid-template-columns: 1fr 1fr; }
+      .steps        { grid-template-columns: 1fr 1fr; }
+      .step-num::after { display: none; }
+      .footer-top   { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .hero         { grid-template-columns: 1fr; padding-top: 48px; }
+      .hero-right   { display: none; }
+      .product-grid { grid-template-columns: 1fr; }
+      .testi-grid   { grid-template-columns: 1fr; }
+      .cta-banner   { flex-direction: column; text-align: center; padding: 40px 28px; }
+      .nav-links    { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ───────────────────────────────────────── -->
+<nav role="navigation" aria-label="Main">
+  <a href="/" class="logo" aria-label="AmeriSave Home">
+    <div class="logo-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    </div>
+    <span class="logo-text">Ameri<span>Save</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#products">Loan Options</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#rates">Today's Rates</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <div class="nav-cta">
+    <button class="btn-ghost">Sign In</button>
+    <button class="btn-primary">Get My Rate</button>
+  </div>
+</nav>
+
+<!-- ── HERO ──────────────────────────────────────── -->
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero-left">
+    <div class="hero-label" aria-hidden="true">Live Rates · No SSN Required</div>
+    <h1 id="hero-heading">Your <em>Home Loan</em>,<br/>Smarter &amp; Faster.</h1>
+    <p class="hero-sub">
+      Compare personalized mortgage rates in minutes — purchase, refinance, or cash-out.
+      Licensed in 49 states with over $100B funded.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-hero btn-hero-primary">Get My Rate — It's Free</button>
+      <button class="btn-hero btn-hero-outline">Talk to a Loan Expert</button>
+    </div>
+    <div class="trust-badges" aria-label="Trust indicators">
+      <div class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Bank-Level Security
+      </div>
+      <div class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1B4FD8" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Close in 25 Days
+      </div>
+      <div class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        4.8 / 5 Stars (50K+ Reviews)
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right" aria-label="Today's rates">
+    <div class="rate-card" id="rates">
+      <div class="rate-card-title">Today's Featured Rates</div>
+      <div class="rate-row">
+        <span class="rate-label">30-Year Fixed</span>
+        <span class="rate-value">6.49% <span>↓ Low</span></span>
+      </div>
+      <div class="rate-row">
+        <span class="rate-label">15-Year Fixed</span>
+        <span class="rate-value">5.87% <span>↓ Low</span></span>
+      </div>
+      <div class="rate-row">
+        <span class="rate-label">5/1 ARM</span>
+        <span class="rate-value">5.62% <span>↑ Adj.</span></span>
+      </div>
+      <div class="rate-row">
+        <span class="rate-label">FHA 30-Year</span>
+        <span class="rate-value">6.12% <span aria-label="Low rate indicator">↓ Low</span></span>
+      </div>
+      <div class="rate-row" style="padding-top:18px">
+        <button class="btn-primary" style="width:100%;padding:12px;font-size:.9rem;">Lock My Rate Today</button>
+      </div>
+    </div>
+    <div style="font-size:.72rem;color:var(--gray-400);text-align:center;padding:0 8px;">
+      Rates shown are for illustrative purposes. APR varies by credit profile, LTV, and state. <a href="#" style="color:var(--sky);">See full disclosure</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ──────────────────────────────────────── -->
+<section class="stats" aria-label="Company statistics">
+  <div class="stat">
+    <div class="stat-value">$<span>100</span>B+</div>
+    <div class="stat-label">Total Loans Funded</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value"><span>49</span></div>
+    <div class="stat-label">States Licensed</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value"><span>25</span> days</div>
+    <div class="stat-label">Average Close Time</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value"><span>4.8</span>★</div>
+    <div class="stat-label">Customer Rating</div>
+  </div>
+</section>
+
+<!-- ── PRODUCT CARDS ──────────────────────────────── -->
+<section class="products" id="products" aria-labelledby="products-heading">
+  <div class="section-header">
+    <div class="section-label">Loan Options</div>
+    <h2 id="products-heading">Find the Right Loan for You</h2>
+    <p>Whether you're buying your first home, lowering your monthly payment, or unlocking your equity — we've got you covered.</p>
+  </div>
+
+  <div class="product-grid">
+
+    <!-- Purchase -->
+    <article class="product-card" tabindex="0">
+      <div class="card-icon card-icon-blue" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1B4FD8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      </div>
+      <h3>Home Purchase</h3>
+      <p>Get pre-approved in minutes and close fast. Competitive rates for first-time buyers and seasoned homeowners alike.</p>
+      <a href="#" class="card-link">
+        Explore Purchase Loans
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </article>
+
+    <!-- Refinance -->
+    <article class="product-card" tabindex="0">
+      <div class="card-icon card-icon-green" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
+          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+        </svg>
+      </div>
+      <h3>Rate &amp; Term Refinance</h3>
+      <p>Lower your interest rate, reduce your monthly payment, or shorten your loan term. See how much you could save.</p>
+      <a href="#" class="card-link">
+        Explore Refinance
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </article>
+
+    <!-- Cash-Out ─ THE ANIMATED CARD ──────────────── -->
+    <article class="product-card cashout" tabindex="0" aria-label="Cash-Out Refinance — hover to preview">
+      <div class="card-highlight" aria-hidden="true"></div>
+      <div class="cashout-stage" aria-hidden="true">
+
+        <!-- House SVG -->
+        <div class="house-wrap">
+          <svg viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
+            <!-- Ground -->
+            <rect x="10" y="108" width="140" height="4" rx="2" fill="#E2E8F0"/>
+            <!-- Body -->
+            <rect x="30" y="68" width="100" height="44" fill="#CBD5E1"/>
+            <!-- Door -->
+            <rect x="68" y="82" width="24" height="30" rx="3" fill="#94A3B8"/>
+            <circle cx="88" cy="97" r="2.5" fill="#64748B"/>
+            <!-- Window L -->
+            <rect x="36" y="76" width="22" height="16" rx="3" fill="#BFDBFE"/>
+            <line x1="47" y1="76" x2="47" y2="92" stroke="#93C5FD" stroke-width="1.5"/>
+            <line x1="36" y1="84" x2="58" y2="84" stroke="#93C5FD" stroke-width="1.5"/>
+            <!-- Window R -->
+            <rect x="102" y="76" width="22" height="16" rx="3" fill="#BFDBFE"/>
+            <line x1="113" y1="76" x2="113" y2="92" stroke="#93C5FD" stroke-width="1.5"/>
+            <line x1="102" y1="84" x2="124" y2="84" stroke="#93C5FD" stroke-width="1.5"/>
+            <!-- Roof -->
+            <polygon points="20,68 80,24 140,68" fill="#475569"/>
+            <polygon points="25,68 80,28 135,68" fill="#64748B"/>
+            <!-- Chimney -->
+            <rect x="100" y="34" width="16" height="24" fill="#475569"/>
+            <!-- Gold glow from chimney (cash portal) -->
+            <ellipse cx="108" cy="34" rx="10" ry="5" fill="#F5C842" opacity=".5"/>
+          </svg>
+        </div>
+
+        <!-- Bills (10) + Coins (5) -->
+        <div class="bill">$100</div>
+        <div class="bill">$100</div>
+        <div class="bill">$100</div>
+        <div class="bill">$50</div>
+        <div class="bill">$50</div>
+        <div class="bill">$100</div>
+        <div class="bill">$20</div>
+        <div class="bill">$100</div>
+        <div class="bill">$50</div>
+        <div class="bill">$100</div>
+        <div class="coin"></div>
+        <div class="coin"></div>
+        <div class="coin"></div>
+        <div class="coin"></div>
+        <div class="coin"></div>
+      </div>
+
+      <div class="card-icon card-icon-gold" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 1 0 0 7h5a3.5 3.5 0 1 1 0 7H6"/>
+        </svg>
+      </div>
+      <h3>Cash-Out Refinance</h3>
+      <p>Tap into your home's equity for renovations, debt consolidation, or any major expense — at mortgage rates.</p>
+      <a href="#" class="card-link" style="color:var(--gold);">
+        Unlock Your Equity
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </article>
+
+    <!-- VA Loans -->
+    <article class="product-card" tabindex="0">
+      <div class="card-icon card-icon-blue" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1B4FD8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+      </div>
+      <h3>VA Home Loans</h3>
+      <p>Exclusive benefits for veterans and active-duty service members. $0 down, no PMI, and competitive rates.</p>
+      <a href="#" class="card-link">
+        Explore VA Loans
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </article>
+
+    <!-- FHA -->
+    <article class="product-card" tabindex="0">
+      <div class="card-icon card-icon-green" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+        </svg>
+      </div>
+      <h3>FHA Loans</h3>
+      <p>As low as 3.5% down and flexible credit requirements make FHA loans ideal for first-time homebuyers.</p>
+      <a href="#" class="card-link">
+        Explore FHA Loans
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </article>
+
+    <!-- Jumbo -->
+    <article class="product-card" tabindex="0">
+      <div class="card-icon card-icon-gold" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
+        </svg>
+      </div>
+      <h3>Jumbo Loans</h3>
+      <p>Finance luxury or high-value properties above conforming limits with competitive jumbo mortgage rates.</p>
+      <a href="#" class="card-link">
+        Explore Jumbo Loans
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </article>
+
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ───────────────────────────────── -->
+<section class="how" id="how" aria-labelledby="how-heading">
+  <div class="section-header">
+    <div class="section-label">Process</div>
+    <h2 id="how-heading">Close Your Loan in 4 Steps</h2>
+    <p>Our streamlined digital process makes getting a mortgage as easy as it should be.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num" aria-hidden="true">1</div>
+      <h4>Get Your Rate</h4>
+      <p>Answer a few questions in under 3 minutes. No credit pull, no SSN required to see real rates.</p>
+    </div>
+    <div class="step">
+      <div class="step-num" aria-hidden="true">2</div>
+      <h4>Choose Your Loan</h4>
+      <p>Compare loan options side-by-side. Pick the rate, term, and monthly payment that fits your budget.</p>
+    </div>
+    <div class="step">
+      <div class="step-num" aria-hidden="true">3</div>
+      <h4>Upload Documents</h4>
+      <p>Securely upload your documents online. Our team reviews and processes everything quickly.</p>
+    </div>
+    <div class="step">
+      <div class="step-num" aria-hidden="true">4</div>
+      <h4>Close &amp; Move In</h4>
+      <p>Sign your final documents. Most loans close in 25 days or less. Celebrate your new home!</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ───────────────────────────────── -->
+<section class="testimonials" id="reviews" aria-labelledby="reviews-heading">
+  <div class="section-header">
+    <div class="section-label">Customer Reviews</div>
+    <h2 id="reviews-heading">Trusted by 50,000+ Homeowners</h2>
+    <p>Real stories from real customers who found their best mortgage with AmeriSave.</p>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="stars" aria-label="5 stars">★★★★★</div>
+      <p>"AmeriSave saved me $312/month by refinancing my 30-year into a 15-year at a much better rate. The whole process took less than 3 weeks."</p>
+      <div class="testi-author">
+        <div class="avatar av-blue" aria-hidden="true">MR</div>
+        <div>
+          <strong>Marcus R.</strong>
+          <span>Cash-Out Refinance · Texas</span>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars" aria-label="5 stars">★★★★★</div>
+      <p>"As a first-time buyer, I was nervous. My loan officer walked me through every step. We closed 5 days ahead of schedule. Highly recommend."</p>
+      <div class="testi-author">
+        <div class="avatar av-green" aria-hidden="true">SL</div>
+        <div>
+          <strong>Sarah L.</strong>
+          <span>FHA Purchase · Ohio</span>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars" aria-label="5 stars">★★★★★</div>
+      <p>"Used the cash-out refi to fund my home renovation. The rate was 2 points lower than my HELOC offer. Excellent experience from start to finish."</p>
+      <div class="testi-author">
+        <div class="avatar av-navy" aria-hidden="true">JK</div>
+        <div>
+          <strong>James K.</strong>
+          <span>Cash-Out Refi · California</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA BANNER ─────────────────────────────────── -->
+<div class="cta-banner" role="complementary" aria-label="Call to action">
+  <div>
+    <h2>Ready to Find Your Best Rate?</h2>
+    <p>Check personalized rates in under 3 minutes. No social security number required. No credit impact.</p>
+  </div>
+  <button class="btn-cta">Get My Free Rate Quote</button>
+</div>
+
+<!-- ── FOOTER ─────────────────────────────────────── -->
+<footer role="contentinfo">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="/" class="logo" style="margin-bottom:4px;" aria-label="AmeriSave Home">
+        <div class="logo-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        </div>
+        <span class="logo-text" style="color:var(--white)">Ameri<span>Save</span></span>
+      </a>
+      <p>AmeriSave Mortgage Corporation is one of the nation's leading mortgage lenders, licensed to originate loans in 49 states and D.C.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Loan Options</h5>
+      <ul>
+        <li><a href="#">Home Purchase</a></li>
+        <li><a href="#">Rate &amp; Term Refi</a></li>
+        <li><a href="#">Cash-Out Refi</a></li>
+        <li><a href="#">VA Loans</a></li>
+        <li><a href="#">FHA Loans</a></li>
+        <li><a href="#">Jumbo Loans</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Resources</h5>
+      <ul>
+        <li><a href="#">Mortgage Calculator</a></li>
+        <li><a href="#">Rate Alerts</a></li>
+        <li><a href="#">Learning Center</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Licensing</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2024 AmeriSave Mortgage Corporation. All rights reserved. <span class="nmls">NMLS #1168</span></div>
+    <div style="display:flex;gap:20px;flex-wrap:wrap;">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Accessibility</a>
+      <a href="#">Equal Housing Lender</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
