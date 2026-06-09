@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home Equity Line of Credit (HELOC) | AmeriSave Mortgage</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['IBM Plex Sans', 'sans-serif'] },
+          colors: {
+            brand: {
+              blue:    '#0B3D91',
+              navy:    '#071F4F',
+              light:   '#1A5CB8',
+              sky:     '#E8F0FC',
+              accent:  '#FF6B2B',
+              gold:    '#F59E0B',
+              success: '#10B981',
+              muted:   '#64748B',
+            }
+          },
+          boxShadow: {
+            card: '0 2px 16px 0 rgba(11,61,145,0.08)',
+            cta:  '0 4px 24px 0 rgba(11,61,145,0.30)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
+    .hero-gradient {
+      background: linear-gradient(135deg, #071F4F 0%, #0B3D91 55%, #1A5CB8 100%);
+    }
+    .section-wave {
+      background: linear-gradient(180deg, #f8faff 0%, #ffffff 100%);
+    }
+    .check-icon::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body class="font-sans text-slate-800 bg-white antialiased">
+
+  <!-- ─── NAVBAR ─── -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-slate-100 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <a href="https://amerisave.com" aria-label="AmeriSave Home" class="flex items-center gap-2 cursor-pointer">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#0B3D91"/>
+          <path d="M18 6L30 26H6L18 6Z" fill="white" opacity="0.9"/>
+          <rect x="14" y="19" width="8" height="7" rx="1" fill="#FF6B2B"/>
+        </svg>
+        <span class="text-xl font-700 text-brand-blue tracking-tight font-bold">AmeriSave</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+        <a href="#benefits"     class="hover:text-brand-blue transition-colors duration-200 cursor-pointer">Benefits</a>
+        <a href="#how-it-works" class="hover:text-brand-blue transition-colors duration-200 cursor-pointer">How It Works</a>
+        <a href="#compare"      class="hover:text-brand-blue transition-colors duration-200 cursor-pointer">Compare</a>
+        <a href="#faq"          class="hover:text-brand-blue transition-colors duration-200 cursor-pointer">FAQ</a>
+      </nav>
+      <a href="#explore"
+         class="inline-flex items-center gap-2 bg-brand-accent text-white text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-orange-600 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2">
+        Get Started
+      </a>
+    </div>
+  </header>
+
+  <!-- ─── HERO ─── -->
+  <section class="hero-gradient relative overflow-hidden">
+    <!-- subtle grid overlay -->
+    <div class="absolute inset-0 opacity-5" style="background-image: url(\"data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M0 0h1v40H0zm40 0h-1v40h1zM0 0v1h40V0zm0 40v-1h40v1z'/%3E%3C/g%3E%3C/svg%3E\");" aria-hidden="true"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 lg:py-32">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Left: copy -->
+        <div>
+          <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-white/90 text-xs font-medium mb-6">
+            <svg class="w-3.5 h-3.5 text-brand-gold" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            Trusted by 1M+ American homeowners
+          </div>
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight mb-6">
+            Unlock Your<br/>
+            <span class="text-brand-gold">Home's Equity.</span><br/>
+            On Your Terms.
+          </h1>
+          <p class="text-lg md:text-xl text-white/80 leading-relaxed mb-8 max-w-xl">
+            A Home Equity Line of Credit (HELOC) lets you borrow against your home's value — flexibly, affordably, and on your schedule. Access funds when you need them, and pay interest only on what you use.
+          </p>
+
+          <!-- Trust signals -->
+          <div class="flex flex-wrap gap-4 mb-10">
+            <div class="flex items-center gap-2 text-white/70 text-sm">
+              <svg class="w-4 h-4 text-brand-success flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              No hidden fees
+            </div>
+            <div class="flex items-center gap-2 text-white/70 text-sm">
+              <svg class="w-4 h-4 text-brand-success flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              Apply in minutes
+            </div>
+            <div class="flex items-center gap-2 text-white/70 text-sm">
+              <svg class="w-4 h-4 text-brand-success flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Competitive rates
+            </div>
+          </div>
+
+          <!-- Primary CTA -->
+          <div id="explore" class="flex flex-col sm:flex-row gap-4">
+            <a href="https://amerisave.com/apply"
+               class="inline-flex items-center justify-center gap-2 bg-brand-accent text-white text-lg font-semibold px-8 py-4 rounded-xl shadow-cta hover:bg-orange-600 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2 focus:ring-offset-brand-navy">
+              Explore My Options
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+            <a href="#how-it-works"
+               class="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/30 text-white text-lg font-medium px-8 py-4 rounded-xl hover:bg-white/20 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/50">
+              See How It Works
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: stats card -->
+        <div class="hidden lg:block">
+          <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8">
+            <p class="text-white/60 text-sm font-medium uppercase tracking-wider mb-6">Why Homeowners Choose AmeriSave</p>
+            <div class="grid grid-cols-2 gap-6">
+              <div>
+                <p class="text-4xl font-bold text-white mb-1">$500K</p>
+                <p class="text-white/70 text-sm">Max credit line available</p>
+              </div>
+              <div>
+                <p class="text-4xl font-bold text-brand-gold mb-1">10yr</p>
+                <p class="text-white/70 text-sm">Flexible draw period</p>
+              </div>
+              <div>
+                <p class="text-4xl font-bold text-white mb-1">20yr</p>
+                <p class="text-white/70 text-sm">Repayment period</p>
+              </div>
+              <div>
+                <p class="text-4xl font-bold text-brand-gold mb-1">A+</p>
+                <p class="text-white/70 text-sm">BBB rated lender</p>
+              </div>
+            </div>
+            <div class="mt-6 pt-6 border-t border-white/10">
+              <div class="flex items-center gap-3">
+                <div class="flex -space-x-2">
+                  <div class="w-8 h-8 rounded-full bg-brand-gold border-2 border-white/20 flex items-center justify-center text-xs font-bold text-brand-navy">JM</div>
+                  <div class="w-8 h-8 rounded-full bg-brand-success border-2 border-white/20 flex items-center justify-center text-xs font-bold text-white">SR</div>
+                  <div class="w-8 h-8 rounded-full bg-blue-400 border-2 border-white/20 flex items-center justify-center text-xs font-bold text-white">KL</div>
+                </div>
+                <p class="text-white/70 text-sm">Join 1M+ homeowners who've trusted AmeriSave</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── KEY BENEFITS ─── -->
+  <section id="benefits" class="py-20 bg-brand-sky">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-brand-blue text-sm font-semibold uppercase tracking-widest mb-3">Why a HELOC?</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-brand-navy mb-4">Key Benefits of a HELOC</h2>
+        <p class="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed">Borrow smarter. A HELOC gives you a revolving line of credit at lower interest rates than personal loans or credit cards — secured by the equity you've already built.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Benefit cards -->
+        <div class="bg-white rounded-2xl p-6 shadow-card hover:shadow-lg transition-shadow duration-200 cursor-default">
+          <div class="w-12 h-12 bg-brand-sky rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-brand-navy mb-2">Flexible Credit Line</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">Access funds up to your credit limit anytime during your draw period — borrow, repay, and borrow again as your needs change.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-card hover:shadow-lg transition-shadow duration-200 cursor-default">
+          <div class="w-12 h-12 bg-brand-sky rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-brand-navy mb-2">Competitive Interest Rates</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">HELOCs typically carry lower rates than credit cards or personal loans because they're secured by your home's equity.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-card hover:shadow-lg transition-shadow duration-200 cursor-default">
+          <div class="w-12 h-12 bg-brand-sky rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-brand-navy mb-2">Interest-Only Payments</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">During your draw period, pay interest only on what you've borrowed — keeping monthly payments lower while you access funds.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-card hover:shadow-lg transition-shadow duration-200 cursor-default">
+          <div class="w-12 h-12 bg-brand-sky rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-brand-navy mb-2">10-Year Draw Period</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">Use your credit line for up to 10 years. Take funds in stages rather than all at once — ideal for ongoing projects or expenses.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-card hover:shadow-lg transition-shadow duration-200 cursor-default">
+          <div class="w-12 h-12 bg-brand-sky rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-brand-navy mb-2">Leverage Your Home's Value</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">Your home's equity is a powerful financial asset. A HELOC lets you put that built-up value to work for you — at favorable terms.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-card hover:shadow-lg transition-shadow duration-200 cursor-default">
+          <div class="w-12 h-12 bg-brand-sky rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-brand-navy mb-2">Potential Tax Benefits</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">Interest paid on a HELOC may be tax-deductible when funds are used for home improvements. Consult your tax advisor for details.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── HOW IT WORKS ─── -->
+  <section id="how-it-works" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-brand-blue text-sm font-semibold uppercase tracking-widest mb-3">Simple Process</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-brand-navy mb-4">How a HELOC Works</h2>
+        <p class="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed">Getting started with a HELOC is straightforward. Here's what to expect from application to accessing your funds.</p>
+      </div>
+
+      <!-- Steps -->
+      <div class="grid md:grid-cols-4 gap-8 relative">
+        <!-- connector line desktop -->
+        <div class="hidden md:block absolute top-10 left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-brand-blue/20 via-brand-blue/60 to-brand-blue/20" aria-hidden="true"></div>
+
+        <div class="flex flex-col items-center text-center">
+          <div class="relative z-10 w-20 h-20 bg-brand-blue rounded-2xl flex items-center justify-center mb-5 shadow-cta">
+            <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          </div>
+          <div class="w-7 h-7 bg-brand-blue rounded-full flex items-center justify-center text-white text-xs font-bold mb-3">1</div>
+          <h3 class="text-lg font-semibold text-brand-navy mb-2">Apply Online</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">Complete our simple online application in minutes. No paperwork piles — just the information we need to get started.</p>
+        </div>
+
+        <div class="flex flex-col items-center text-center">
+          <div class="relative z-10 w-20 h-20 bg-brand-blue rounded-2xl flex items-center justify-center mb-5 shadow-cta">
+            <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          </div>
+          <div class="w-7 h-7 bg-brand-blue rounded-full flex items-center justify-center text-white text-xs font-bold mb-3">2</div>
+          <h3 class="text-lg font-semibold text-brand-navy mb-2">Home Appraisal</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">We'll assess your home's current market value to determine your available equity and the credit line you qualify for.</p>
+        </div>
+
+        <div class="flex flex-col items-center text-center">
+          <div class="relative z-10 w-20 h-20 bg-brand-blue rounded-2xl flex items-center justify-center mb-5 shadow-cta">
+            <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div class="w-7 h-7 bg-brand-blue rounded-full flex items-center justify-center text-white text-xs font-bold mb-3">3</div>
+          <h3 class="text-lg font-semibold text-brand-navy mb-2">Get Approved</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">Our underwriting team reviews your application and equity. We work efficiently to deliver your approval decision quickly.</p>
+        </div>
+
+        <div class="flex flex-col items-center text-center">
+          <div class="relative z-10 w-20 h-20 bg-brand-accent rounded-2xl flex items-center justify-center mb-5 shadow-cta">
+            <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+          </div>
+          <div class="w-7 h-7 bg-brand-accent rounded-full flex items-center justify-center text-white text-xs font-bold mb-3">4</div>
+          <h3 class="text-lg font-semibold text-brand-navy mb-2">Access Your Funds</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">Draw funds whenever you need them during your 10-year draw period — via check, online transfer, or a special HELOC card.</p>
+        </div>
+      </div>
+
+      <div class="text-center mt-12">
+        <a href="https://amerisave.com/apply"
+           class="inline-flex items-center gap-2 bg-brand-blue text-white font-semibold px-8 py-4 rounded-xl hover:bg-brand-light transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 shadow-cta">
+          Start My Application
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SMART USES ─── -->
+  <section class="py-20 bg-brand-navy">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-brand-gold text-sm font-semibold uppercase tracking-widest mb-3">Put Your Equity to Work</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Smart Uses for Your HELOC</h2>
+        <p class="text-white/70 text-lg max-w-2xl mx-auto leading-relaxed">Homeowners use HELOCs for a wide range of financial goals. Here are some of the most common — and most effective — ways to use your credit line.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors duration-200 cursor-default">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-brand-gold/20 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-brand-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            </div>
+            <div>
+              <h3 class="text-white font-semibold mb-1">Home Improvements</h3>
+              <p class="text-white/60 text-sm leading-relaxed">Kitchen remodels, bathroom upgrades, additions, or repairs — invest back into your home and potentially increase its value.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors duration-200 cursor-default">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-brand-gold/20 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-brand-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+            </div>
+            <div>
+              <h3 class="text-white font-semibold mb-1">Debt Consolidation</h3>
+              <p class="text-white/60 text-sm leading-relaxed">Pay off high-interest credit card debt or personal loans with your HELOC's lower rate — simplifying payments and saving money.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors duration-200 cursor-default">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-brand-gold/20 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-brand-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            </div>
+            <div>
+              <h3 class="text-white font-semibold mb-1">Education Expenses</h3>
+              <p class="text-white/60 text-sm leading-relaxed">Fund tuition, books, and living costs for yourself or a family member — often at rates far lower than private student loans.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors duration-200 cursor-default">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-brand-gold/20 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-brand-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            </div>
+            <div>
+              <h3 class="text-white font-semibold mb-1">Emergency Fund</h3>
+              <p class="text-white/60 text-sm leading-relaxed">Establish a financial safety net for unexpected medical bills, job loss, or urgent repairs — draw only if and when you need it.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors duration-200 cursor-default">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-brand-gold/20 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-brand-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+            </div>
+            <div>
+              <h3 class="text-white font-semibold mb-1">Investment Opportunities</h3>
+              <p class="text-white/60 text-sm leading-relaxed">Seize time-sensitive investment opportunities — from real estate to small business — using your HELOC as flexible capital.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors duration-200 cursor-default">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-brand-gold/20 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-brand-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            </div>
+            <div>
+              <h3 class="text-white font-semibold mb-1">Major Life Events</h3>
+              <p class="text-white/60 text-sm leading-relaxed">Weddings, adoptions, elder care costs — a HELOC gives you a ready reserve of funds for life's significant financial moments.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ELIGIBILITY ─── -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-16 items-start">
+        <div>
+          <p class="text-brand-blue text-sm font-semibold uppercase tracking-widest mb-3">Do You Qualify?</p>
+          <h2 class="text-3xl md:text-4xl font-bold text-brand-navy mb-6">Eligibility Requirements</h2>
+          <p class="text-slate-600 text-lg leading-relaxed mb-8">Most homeowners with sufficient equity qualify for a HELOC. Here's what lenders typically evaluate:</p>
+
+          <ul class="space-y-5" role="list">
+            <li class="flex items-start gap-4">
+              <div class="w-8 h-8 bg-brand-sky rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <div>
+                <h4 class="font-semibold text-brand-navy mb-0.5">Sufficient Home Equity</h4>
+                <p class="text-slate-600 text-sm leading-relaxed">You typically need at least 15–20% equity in your home. Lenders usually allow you to borrow up to 85% of your home's appraised value, minus what you owe.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-4">
+              <div class="w-8 h-8 bg-brand-sky rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <div>
+                <h4 class="font-semibold text-brand-navy mb-0.5">Credit Score of 620 or Higher</h4>
+                <p class="text-slate-600 text-sm leading-relaxed">A minimum credit score of 620 is generally required, though a higher score (700+) can help you qualify for better interest rates.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-4">
+              <div class="w-8 h-8 bg-brand-sky rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <div>
+                <h4 class="font-semibold text-brand-navy mb-0.5">Debt-to-Income Ratio Below 43%</h4>
+                <p class="text-slate-600 text-sm leading-relaxed">Your total monthly debt payments (including the new HELOC) should not exceed 43% of your gross monthly income.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-4">
+              <div class="w-8 h-8 bg-brand-sky rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <div>
+                <h4 class="font-semibold text-brand-navy mb-0.5">Primary or Secondary Residence</h4>
+                <p class="text-slate-600 text-sm leading-relaxed">HELOCs are available on primary and secondary homes. Investment properties may have different requirements.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-4">
+              <div class="w-8 h-8 bg-brand-sky rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <div>
+                <h4 class="font-semibold text-brand-navy mb-0.5">Reliable Income History</h4>
+                <p class="text-slate-600 text-sm leading-relaxed">Lenders want to see steady income — typically 2 years of employment history or self-employment documentation — to verify repayment ability.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- CTA card -->
+        <div class="lg:sticky lg:top-24">
+          <div class="bg-brand-sky border border-brand-blue/10 rounded-2xl p-8">
+            <h3 class="text-2xl font-bold text-brand-navy mb-3">See If You Qualify</h3>
+            <p class="text-slate-600 mb-6 leading-relaxed">Answer a few quick questions to find out how much equity you can access — with no impact to your credit score.</p>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-center gap-3 text-sm text-slate-700">
+                <svg class="w-4 h-4 text-brand-success flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                No impact to your credit score
+              </li>
+              <li class="flex items-center gap-3 text-sm text-slate-700">
+                <svg class="w-4 h-4 text-brand-success flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                Results in under 3 minutes
+              </li>
+              <li class="flex items-center gap-3 text-sm text-slate-700">
+                <svg class="w-4 h-4 text-brand-success flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                No obligation to proceed
+              </li>
+            </ul>
+            <a href="https://amerisave.com/apply"
+               class="w-full inline-flex items-center justify-center gap-2 bg-brand-accent text-white font-semibold px-6 py-4 rounded-xl hover:bg-orange-600 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2 shadow-cta">
+              Explore My Options
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+            <p class="text-center text-xs text-slate-500 mt-4">By clicking, you agree to AmeriSave's <a href="#" class="underline cursor-pointer hover:text-brand-blue transition-colors duration-200">Terms of Use</a> and <a href="#" class="underline cursor-pointer hover:text-brand-blue transition-colors duration-200">Privacy Policy</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── COMPARISON TABLE ─── -->
+  <section id="compare" class="py-20 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-brand-blue text-sm font-semibold uppercase tracking-widest mb-3">Know Your Options</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-brand-navy mb-4">HELOC vs. Home Equity Loan</h2>
+        <p class="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed">Both products let you borrow against your home's equity — but they work differently. Use this comparison to choose the right fit for your goals.</p>
+      </div>
+
+      <!-- Desktop table / Mobile cards -->
+      <div class="overflow-x-auto rounded-2xl shadow-card border border-slate-200">
+        <table class="w-full min-w-[640px] border-collapse bg-white" role="table">
+          <thead>
+            <tr>
+              <th class="text-left px-6 py-4 bg-white text-slate-500 text-sm font-medium border-b border-slate-100 w-48" scope="col">Feature</th>
+              <th class="px-6 py-5 bg-brand-blue text-white text-center" scope="col">
+                <span class="block text-xs font-medium uppercase tracking-wider text-blue-200 mb-0.5">Flexible Access</span>
+                <span class="text-lg font-bold">HELOC</span>
+              </th>
+              <th class="px-6 py-5 bg-slate-100 text-brand-navy text-center border-b border-slate-200" scope="col">
+                <span class="block text-xs font-medium uppercase tracking-wider text-slate-500 mb-0.5">Fixed Lump Sum</span>
+                <span class="text-lg font-bold">Home Equity Loan</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr class="hover:bg-slate-50 transition-colors duration-150">
+              <td class="px-6 py-4 text-sm font-medium text-slate-700">How You Receive Funds</td>
+              <td class="px-6 py-4 text-center">
+                <span class="inline-block bg-brand-sky text-brand-blue text-sm font-medium px-3 py-1 rounded-full">Revolving credit line</span>
+              </td>
+              <td class="px-6 py-4 text-center text-sm text-slate-600">One-time lump sum</td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition-colors duration-150">
+              <td class="px-6 py-4 text-sm font-medium text-slate-700">Interest Rate Type</td>
+              <td class="px-6 py-4 text-center">
+                <span class="inline-block bg-brand-sky text-brand-blue text-sm font-medium px-3 py-1 rounded-full">Variable rate</span>
+              </td>
+              <td class="px-6 py-4 text-center text-sm text-slate-600">Fixed rate</td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition-colors duration-150">
+              <td class="px-6 py-4 text-sm font-medium text-slate-700">Draw Period</td>
+              <td class="px-6 py-4 text-center">
+                <span class="inline-block bg-brand-sky text-brand-blue text-sm font-medium px-3 py-1 rounded-full">Up to 10 years</span>
+              </td>
+              <td class="px-6 py-4 text-center text-sm text-slate-600">None — funds disbursed immediately</td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition-colors duration-150">
+              <td class="px-6 py-4 text-sm font-medium text-slate-700">Repayment Period</td>
+              <td class="px-6 py-4 text-center">
+                <span class="inline-block bg-brand-sky text-brand-blue text-sm font-medium px-3 py-1 rounded-full">Up to 20 years</span>
+              </td>
+              <td class="px-6 py-4 text-center text-sm text-slate-600">Fixed term (5–30 years)</td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition-colors duration-150">
+              <td class="px-6 py-4 text-sm font-medium text-slate-700">Monthly Payment</td>
+              <td class="px-6 py-4 text-center">
+                <span class="inline-block bg-brand-sky text-brand-blue text-sm font-medium px-3 py-1 rounded-full">Interest-only during draw</span>
+              </td>
+              <td class="px-6 py-4 text-center text-sm text-slate-600">Principal + interest from day one</td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition-colors duration-150">
+              <td class="px-6 py-4 text-sm font-medium text-slate-700">Flexibility</td>
+              <td class="px-6 py-4 text-center">
+                <div class="flex items-center justify-center gap-1.5">
+                  <svg class="w-4 h-4 text-brand-success" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                  <span class="text-sm font-medium text-brand-success">High — borrow as needed</span>
+                </div>
+              </td>
+              <td class="px-6 py-4 text-center text-sm text-slate-600">Low — fixed amount upfront</td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition-colors duration-150">
+              <td class="px-6 py-4 text-sm font-medium text-slate-700">Best For</td>
+              <td class="px-6 py-4 text-center">
+                <span class="inline-block bg-brand-sky text-brand-blue text-sm font-medium px-3 py-1 rounded-full">Ongoing or uncertain expenses</span>
+              </td>
+              <td class="px-6 py-4 text-center text-sm text-slate-600">One-time, known expenses</td>
+            </tr>
+            <tr class="hover:bg-slate-50 transition-colors duration-150">
+              <td class="px-6 py-4 text-sm font-medium text-slate-700">Closing Costs</td>
+              <td class="px-6 py-4 text-center">
+                <span class="inline-block bg-brand-sky text-brand-blue text-sm font-medium px-3 py-1 rounded-full">Generally lower</span>
+              </td>
+              <td class="px-6 py-4 text-center text-sm text-slate-600">Similar to mortgage costs</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PROS & CONS ─── -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-brand-blue text-sm font-semibold uppercase tracking-widest mb-3">Balanced View</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-brand-navy mb-4">HELOC Pros & Cons</h2>
+        <p class="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed">We believe in transparency. Here's an honest look at the advantages and considerations of a HELOC so you can make an informed decision.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Pros -->
+        <div class="bg-gradient-to-br from-emerald-50 to-white border border-emerald-100 rounded-2xl p-8">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 bg-brand-success rounded-xl flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <h3 class="text-xl font-bold text-slate-800">Advantages</h3>
+          </div>
+          <ul class="space-y-4" role="list">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-brand-success flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <div>
+                <span class="font-medium text-slate-800">Flexible borrowing</span>
+                <p class="text-slate-600 text-sm mt-0.5">Draw funds as needed rather than all at once — pay interest only on what you actually use.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-brand-success flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <div>
+                <span class="font-medium text-slate-800">Lower initial rates</span>
+                <p class="text-slate-600 text-sm mt-0.5">Variable rates are typically lower than fixed home equity loans and significantly lower than credit cards.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-brand-success flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <div>
+                <span class="font-medium text-slate-800">Interest-only payment option</span>
+                <p class="text-slate-600 text-sm mt-0.5">During the 10-year draw period, you may have the option to make interest-only payments, reducing cash flow pressure.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-brand-success flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <div>
+                <span class="font-medium text-slate-800">Potential tax deductibility</span>
+                <p class="text-slate-600 text-sm mt-0.5">Interest may be tax-deductible if funds are used to improve your home. Consult your tax advisor.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-brand-success flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <div>
+                <span class="font-medium text-slate-800">Reusable credit line</span>
+                <p class="text-slate-600 text-sm mt-0.5">As you repay, the credit becomes available again — similar to a credit card, but backed by your home's equity.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Cons -->
+        <div class="bg-gradient-to-br from-amber-50 to-white border border-amber-100 rounded-2xl p-8">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 bg-amber-500 rounded-xl flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            </div>
+            <h3 class="text-xl font-bold text-slate-800">Considerations</h3>
+          </div>
+          <ul class="space-y-4" role="list">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01"/></svg>
+              <div>
+                <span class="font-medium text-slate-800">Variable interest rates</span>
+                <p class="text-slate-600 text-sm mt-0.5">Rates can rise over time as market conditions change, which may increase your monthly payments.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01"/></svg>
+              <div>
+                <span class="font-medium text-slate-800">Home is used as collateral</span>
+                <p class="text-slate-600 text-sm mt-0.5">Failure to repay puts your home at risk of foreclosure. Borrow responsibly within your means.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01"/></svg>
+              <div>
+                <span class="font-medium text-slate-800">Payment increase after draw period</span>
+                <p class="text-slate-600 text-sm mt-0.5">Once the draw period ends, you enter repayment and must pay both principal and interest, which increases monthly payments.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01"/></svg>
+              <div>
+                <span class="font-medium text-slate-800">Lender may freeze or reduce line</span>
+                <p class="text-slate-600 text-sm mt-0.5">In some market conditions, lenders can reduce your available credit line — potentially limiting your access to funds.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01"/></svg>
+              <div>
+                <span class="font-medium text-slate-800">Closing costs and fees</span>
+                <p class="text-slate-600 text-sm mt-0.5">Like any mortgage product, a HELOC involves closing costs, appraisal fees, and potentially annual fees.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── MID-PAGE CTA BANNER ─── -->
+  <section class="py-16 bg-gradient-to-r from-brand-navy via-brand-blue to-brand-light">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Put Your Equity to Work?</h2>
+      <p class="text-white/80 text-lg mb-8 max-w-2xl mx-auto">See personalized HELOC options for your home in minutes — no commitment required, no impact to your credit score.</p>
+      <a href="https://amerisave.com/apply"
+         class="inline-flex items-center gap-3 bg-brand-accent text-white text-xl font-bold px-10 py-5 rounded-2xl hover:bg-orange-600 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2 focus:ring-offset-brand-navy shadow-cta">
+        Explore My Options
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+      <p class="text-white/50 text-sm mt-4">Licensed in 49 states. NMLS #1168</p>
+    </div>
+  </section>
+
+  <!-- ─── FAQ ─── -->
+  <section id="faq" class="py-20 bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-brand-blue text-sm font-semibold uppercase tracking-widest mb-3">Got Questions?</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-brand-navy mb-4">Frequently Asked Questions</h2>
+        <p class="text-slate-600 text-lg leading-relaxed">Everything you need to know about HELOCs — answered clearly.</p>
+      </div>
+
+      <div class="space-y-4" role="list">
+        <!-- FAQ items using details/summary for accessibility with no JS -->
+        <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/30 transition-colors duration-200">
+          <summary class="flex items-center justify-between px-6 py-5 font-semibold text-brand-navy list-none cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-inset">
+            What is a HELOC and how does it work?
+            <svg class="w-5 h-5 text-brand-blue flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-slate-600 leading-relaxed text-sm border-t border-slate-100 pt-4">
+            A Home Equity Line of Credit (HELOC) is a revolving credit line secured by your home's equity. Similar to a credit card, you can draw funds up to your credit limit, repay them, and borrow again during a set draw period — typically 10 years. After the draw period, you enter a repayment phase (usually 20 years) during which you pay down both principal and interest.
+          </div>
+        </details>
+
+        <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/30 transition-colors duration-200">
+          <summary class="flex items-center justify-between px-6 py-5 font-semibold text-brand-navy list-none cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-inset">
+            How much can I borrow with a HELOC?
+            <svg class="w-5 h-5 text-brand-blue flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-slate-600 leading-relaxed text-sm border-t border-slate-100 pt-4">
+            The amount you can borrow depends on your home's appraised value, how much you still owe on your mortgage, and your creditworthiness. Most lenders, including AmeriSave, allow you to borrow up to 85% of your home's value minus your outstanding mortgage balance. For example, if your home is worth $400,000 and you owe $250,000, you may be eligible for a credit line of up to $90,000.
+          </div>
+        </details>
+
+        <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/30 transition-colors duration-200">
+          <summary class="flex items-center justify-between px-6 py-5 font-semibold text-brand-navy list-none cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-inset">
+            What is the difference between the draw period and repayment period?
+            <svg class="w-5 h-5 text-brand-blue flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-slate-600 leading-relaxed text-sm border-t border-slate-100 pt-4">
+            During the draw period (typically up to 10 years), you can access funds from your credit line and are generally only required to make interest payments on the amount borrowed. After the draw period ends, you enter the repayment period (typically up to 20 years), during which you can no longer draw new funds and must make full principal-and-interest payments to pay off the outstanding balance.
+          </div>
+        </details>
+
+        <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/30 transition-colors duration-200">
+          <summary class="flex items-center justify-between px-6 py-5 font-semibold text-brand-navy list-none cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-inset">
+            Are HELOC interest rates fixed or variable?
+            <svg class="w-5 h-5 text-brand-blue flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-slate-600 leading-relaxed text-sm border-t border-slate-100 pt-4">
+            Most HELOCs carry variable interest rates, meaning the rate can change over time based on an index (such as the Prime Rate). This means your payments can fluctuate. Some lenders offer the ability to convert a portion of your balance to a fixed rate. If payment predictability is important to you, a Home Equity Loan with a fixed rate may be a better option.
+          </div>
+        </details>
+
+        <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/30 transition-colors duration-200">
+          <summary class="flex items-center justify-between px-6 py-5 font-semibold text-brand-navy list-none cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-inset">
+            Will a HELOC application affect my credit score?
+            <svg class="w-5 h-5 text-brand-blue flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-slate-600 leading-relaxed text-sm border-t border-slate-100 pt-4">
+            Getting a rate estimate or exploring your options with AmeriSave does not impact your credit score — we use a soft credit inquiry for initial qualification. A formal application will result in a hard inquiry, which can have a small, temporary impact on your score. Shopping multiple lenders within a short window (typically 14–45 days) is treated as a single inquiry by most credit scoring models.
+          </div>
+        </details>
+
+        <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/30 transition-colors duration-200">
+          <summary class="flex items-center justify-between px-6 py-5 font-semibold text-brand-navy list-none cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-inset">
+            Can I pay off my HELOC early?
+            <svg class="w-5 h-5 text-brand-blue flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-slate-600 leading-relaxed text-sm border-t border-slate-100 pt-4">
+            Yes. You can make additional payments at any time during the draw or repayment period without penalty (check your loan terms for any prepayment fees). Paying down the principal during the draw period reduces the amount you owe and increases available credit. Paying off early can save you significant interest over the life of the line.
+          </div>
+        </details>
+
+        <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/30 transition-colors duration-200">
+          <summary class="flex items-center justify-between px-6 py-5 font-semibold text-brand-navy list-none cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-inset">
+            Is the interest on a HELOC tax deductible?
+            <svg class="w-5 h-5 text-brand-blue flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-slate-600 leading-relaxed text-sm border-t border-slate-100 pt-4">
+            Under current tax law, interest paid on a HELOC may be tax-deductible if the funds are used to "buy, build, or substantially improve" the home securing the loan. Interest used for other purposes (e.g., debt consolidation, personal expenses) is generally not deductible. Tax laws change, so we strongly recommend consulting a qualified tax advisor for advice specific to your situation.
+          </div>
+        </details>
+
+        <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/30 transition-colors duration-200">
+          <summary class="flex items-center justify-between px-6 py-5 font-semibold text-brand-navy list-none cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-inset">
+            How long does it take to get a HELOC with AmeriSave?
+            <svg class="w-5 h-5 text-brand-blue flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-slate-600 leading-relaxed text-sm border-t border-slate-100 pt-4">
+            The HELOC process typically takes 2–6 weeks from application to closing. The timeline depends on factors like the speed of your home appraisal, document gathering, and underwriting review. AmeriSave's streamlined online process and dedicated loan officers are designed to move as efficiently as possible while ensuring accuracy and compliance.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── BOTTOM CTA ─── -->
+  <section class="py-20 bg-brand-sky border-t border-brand-blue/10">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="inline-flex items-center gap-2 bg-brand-blue/10 rounded-full px-4 py-1.5 text-brand-blue text-xs font-semibold uppercase tracking-wider mb-6">
+        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
+        Secure &amp; No-Obligation
+      </div>
+      <h2 class="text-3xl md:text-4xl font-bold text-brand-navy mb-4">Your Equity. Your Opportunity.</h2>
+      <p class="text-slate-600 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">AmeriSave has helped over 1 million Americans achieve their financial goals. Let us help you put your home's equity to work — with the transparency and support you deserve.</p>
+      <a href="https://amerisave.com/apply"
+         class="inline-flex items-center gap-3 bg-brand-accent text-white text-xl font-bold px-12 py-5 rounded-2xl hover:bg-orange-600 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2 shadow-cta">
+        Explore My Options
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+      <div class="flex flex-wrap justify-center gap-8 mt-12">
+        <div class="flex items-center gap-2 text-slate-500 text-sm">
+          <svg class="w-4 h-4 text-brand-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          Licensed in 49 States
+        </div>
+        <div class="flex items-center gap-2 text-slate-500 text-sm">
+          <svg class="w-4 h-4 text-brand-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+          A+ BBB Rating
+        </div>
+        <div class="flex items-center gap-2 text-slate-500 text-sm">
+          <svg class="w-4 h-4 text-brand-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          1M+ Customers Served
+        </div>
+        <div class="flex items-center gap-2 text-slate-500 text-sm">
+          <svg class="w-4 h-4 text-brand-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+          NMLS #1168
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="bg-brand-navy text-white/60 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8">
+        <div class="flex items-center gap-2">
+          <svg width="28" height="28" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+            <rect width="36" height="36" rx="8" fill="#0B3D91"/>
+            <path d="M18 6L30 26H6L18 6Z" fill="white" opacity="0.9"/>
+            <rect x="14" y="19" width="8" height="7" rx="1" fill="#FF6B2B"/>
+          </svg>
+          <span class="text-white font-semibold">AmeriSave Mortgage</span>
+        </div>
+        <nav class="flex flex-wrap gap-5 text-sm" aria-label="Footer navigation">
+          <a href="#" class="hover:text-white transition-colors duration-200 cursor-pointer">Privacy Policy</a>
+          <a href="#" class="hover:text-white transition-colors duration-200 cursor-pointer">Terms of Use</a>
+          <a href="#" class="hover:text-white transition-colors duration-200 cursor-pointer">Licensing</a>
+          <a href="#" class="hover:text-white transition-colors duration-200 cursor-pointer">Accessibility</a>
+          <a href="#" class="hover:text-white transition-colors duration-200 cursor-pointer">Contact Us</a>
+        </nav>
+      </div>
+      <div class="border-t border-white/10 pt-6 text-xs leading-relaxed space-y-2">
+        <p>AmeriSave Mortgage Corporation | NMLS #1168 | 3525 Piedmont Road NE, 8 Piedmont Center Suite 600, Atlanta, GA 30305</p>
+        <p>© 2026 AmeriSave Mortgage Corporation. All Rights Reserved. Equal Housing Lender.</p>
+        <p class="text-white/40">This is not a commitment to lend. All loans subject to credit and property approval. Program availability and terms may vary. Rates shown are for illustrative purposes only and are subject to change without notice. Contact a licensed mortgage professional for personalized advice. Interest on a HELOC may only be deductible if the loan proceeds are used to "buy, build, or substantially improve" the home; consult your tax advisor. Your home is used as collateral; failure to repay may result in the loss of your home.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
