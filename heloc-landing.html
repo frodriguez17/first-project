@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HELOC – Home Equity Line of Credit | AmeriSave Mortgage</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* ── Tailwind config ── */
+    :root {
+      --blue-primary: #003087;
+      --blue-mid:     #0057b8;
+      --blue-light:   #1a7fe8;
+      --blue-glow:    rgba(0, 87, 184, 0.55);
+      --glass-bg:     rgba(255, 255, 255, 0.10);
+      --glass-border: rgba(255, 255, 255, 0.22);
+    }
+
+    /* ── Base ── */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      background: #f0f4fa;
+      color: #0f1c2e;
+      overflow-x: hidden;
+    }
+
+    /* ── Scroll-progress bar ── */
+    #progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #1a7fe8, #00c6ff);
+      width: 0%;
+      z-index: 9999;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 8px rgba(26,127,232,0.7);
+    }
+
+    /* ── Animated gradient mesh hero ── */
+    .hero-mesh {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 40%, rgba(26,127,232,0.45) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 20%, rgba(0,198,255,0.30) 0%, transparent 55%),
+        radial-gradient(ellipse 70% 50% at 60% 80%, rgba(0,48,135,0.55) 0%, transparent 60%),
+        linear-gradient(135deg, #001f5c 0%, #003087 35%, #0057b8 70%, #1a7fe8 100%);
+      animation: meshShift 12s ease-in-out infinite alternate;
+      filter: blur(0px);
+    }
+    @keyframes meshShift {
+      0%   { background-position: 0% 0%, 100% 0%, 50% 100%, center; }
+      50%  { background-position: 30% 50%, 70% 30%, 20% 70%, center; }
+      100% { background-position: 60% 20%, 40% 80%, 80% 40%, center; }
+    }
+
+    /* ── Glassmorphism card ── */
+    .glass-card {
+      background: rgba(255,255,255,0.09);
+      backdrop-filter: blur(16px) saturate(1.4);
+      -webkit-backdrop-filter: blur(16px) saturate(1.4);
+      border: 1px solid rgba(255,255,255,0.20);
+      border-radius: 20px;
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+    }
+    .glass-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 48px rgba(26,127,232,0.30), 0 0 0 1px rgba(26,127,232,0.45);
+      border-color: rgba(26,127,232,0.55);
+    }
+
+    /* Light glass (on white bg sections) */
+    .glass-card-light {
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(20px) saturate(1.6);
+      -webkit-backdrop-filter: blur(20px) saturate(1.6);
+      border: 1px solid rgba(0,87,184,0.14);
+      border-radius: 20px;
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+    }
+    .glass-card-light:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(0,87,184,0.15), 0 0 0 1.5px rgba(0,87,184,0.35);
+      border-color: rgba(0,87,184,0.40);
+    }
+
+    /* ── CTA shimmer button ── */
+    .btn-shimmer {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0057b8, #1a7fe8);
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      border-radius: 50px;
+      padding: 18px 44px;
+      font-size: 1.05rem;
+      border: none;
+      cursor: pointer;
+      transition: box-shadow 250ms ease, transform 200ms ease;
+      box-shadow: 0 6px 28px rgba(0,87,184,0.40);
+    }
+    .btn-shimmer::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -75%;
+      width: 50%; height: 100%;
+      background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.42) 50%, transparent 100%);
+      transform: skewX(-20deg);
+      transition: left 550ms ease;
+    }
+    .btn-shimmer:hover::after { left: 130%; }
+    .btn-shimmer:hover {
+      box-shadow: 0 10px 40px rgba(0,87,184,0.60);
+      transform: translateY(-2px) scale(1.02);
+    }
+    .btn-shimmer:active { transform: translateY(0) scale(0.99); }
+
+    /* Outline shimmer variant */
+    .btn-shimmer-outline {
+      position: relative;
+      overflow: hidden;
+      background: transparent;
+      color: #0057b8;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      border-radius: 50px;
+      padding: 16px 40px;
+      font-size: 1.05rem;
+      border: 2px solid #0057b8;
+      cursor: pointer;
+      transition: background 250ms ease, color 250ms ease, box-shadow 250ms ease, transform 200ms ease;
+    }
+    .btn-shimmer-outline:hover {
+      background: #0057b8;
+      color: #fff;
+      box-shadow: 0 8px 28px rgba(0,87,184,0.35);
+      transform: translateY(-2px);
+    }
+
+    /* ── Scroll-reveal animations ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 600ms ease, transform 600ms ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 600ms ease, transform 600ms ease;
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 600ms ease, transform 600ms ease;
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* Staggered delays */
+    .delay-100 { transition-delay: 100ms; }
+    .delay-200 { transition-delay: 200ms; }
+    .delay-300 { transition-delay: 300ms; }
+    .delay-400 { transition-delay: 400ms; }
+    .delay-500 { transition-delay: 500ms; }
+
+    /* ── Comparison table row highlight ── */
+    .compare-row { transition: background 200ms ease; }
+    .compare-row:hover { background: rgba(0,87,184,0.06); }
+
+    /* ── Pros / Cons scale on hover ── */
+    .pros-cons-card {
+      transition: transform 200ms ease, box-shadow 200ms ease;
+    }
+    .pros-cons-card:hover {
+      transform: scale(1.025);
+      box-shadow: 0 18px 52px rgba(0,87,184,0.14);
+    }
+
+    /* ── Step connector line ── */
+    .step-line {
+      position: absolute;
+      top: 36px;
+      left: calc(50% + 28px);
+      right: calc(-50% + 28px);
+      height: 2px;
+      background: linear-gradient(90deg, #0057b8, #1a7fe8);
+      opacity: 0.3;
+    }
+
+    /* ── FAQ accordion ── */
+    details summary { cursor: pointer; list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details[open] .faq-icon { transform: rotate(45deg); }
+    .faq-icon { transition: transform 250ms ease; }
+    details .faq-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 350ms ease, opacity 300ms ease;
+      opacity: 0;
+    }
+    details[open] .faq-body {
+      max-height: 600px;
+      opacity: 1;
+    }
+
+    /* ── Stat counter ── */
+    .stat-num { font-variant-numeric: tabular-nums; }
+
+    /* ── Gradient section divider ── */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,87,184,0.20), transparent);
+      margin: 0 auto;
+      max-width: 900px;
+    }
+
+    /* ── Parallax hero image ── */
+    .parallax-img {
+      will-change: transform;
+      transition: transform 0.05s linear;
+    }
+
+    /* ── Responsive nav ── */
+    @media (max-width: 768px) {
+      .hero-cta-group { flex-direction: column; align-items: stretch; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ── Reduced-motion overrides ── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal, .reveal-left, .reveal-right {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      .hero-mesh { animation: none; }
+    }
+
+    /* ── Utility ── */
+    .text-gradient {
+      background: linear-gradient(135deg, #ffffff 0%, #a8d4ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .text-gradient-blue {
+      background: linear-gradient(135deg, #0057b8 0%, #1a7fe8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #1a7fe8;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     SCROLL PROGRESS BAR
+════════════════════════════════════════ -->
+<div id="progress-bar"></div>
+
+<!-- ════════════════════════════════════════
+     NAVIGATION
+════════════════════════════════════════ -->
+<nav class="fixed top-3 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-6xl"
+     style="background:rgba(0,30,80,0.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.13);border-radius:16px;">
+  <div class="flex items-center justify-between px-6 py-3">
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+        <rect width="32" height="32" rx="8" fill="#1a7fe8"/>
+        <path d="M6 24 L16 8 L26 24 Z" fill="white" opacity="0.9"/>
+        <path d="M11 24 L16 15 L21 24 Z" fill="white" opacity="0.55"/>
+      </svg>
+      <span class="text-white font-bold text-lg tracking-tight">AmeriSave</span>
+    </a>
+    <!-- Links -->
+    <div class="hidden md:flex items-center gap-8 text-sm text-blue-100">
+      <a href="#benefits" class="hover:text-white transition-colors">Benefits</a>
+      <a href="#how-it-works" class="hover:text-white transition-colors">How It Works</a>
+      <a href="#compare" class="hover:text-white transition-colors">Compare</a>
+      <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
+    </div>
+    <a href="#get-started" class="btn-shimmer hidden md:inline-block" style="padding:10px 24px;font-size:0.88rem;">
+      Explore My Options
+    </a>
+    <!-- Mobile menu icon -->
+    <button class="md:hidden text-white p-1" aria-label="Menu">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section id="hero" class="relative min-h-screen flex items-center overflow-hidden pt-24 pb-20">
+  <!-- Animated gradient mesh -->
+  <div class="hero-mesh" aria-hidden="true"></div>
+  <!-- Subtle grid overlay -->
+  <div aria-hidden="true" style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px);background-size:64px 64px;"></div>
+
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Hero copy -->
+      <div>
+        <div class="reveal section-label mb-4" style="color:#7ec8ff;">Home Equity Line of Credit</div>
+        <h1 class="reveal delay-100 text-gradient font-extrabold leading-tight mb-6"
+            style="font-size:clamp(2.4rem,5.5vw,4rem);">
+          Unlock the Equity<br>in Your Home
+        </h1>
+        <p class="reveal delay-200 text-blue-100 text-lg leading-relaxed mb-8" style="max-width:520px;">
+          A HELOC gives you flexible access to funds when you need them — borrow only what you use, pay interest only on what you draw, and tap into your home's value at competitive rates.
+        </p>
+
+        <!-- Stats row -->
+        <div class="reveal delay-300 grid grid-cols-3 gap-4 mb-10 stats-grid">
+          <div class="glass-card p-4 text-center">
+            <div class="stat-num text-white font-extrabold text-2xl" data-target="730000" data-suffix="K+" data-display="730K+">730K+</div>
+            <div class="text-blue-200 text-xs mt-1 leading-tight">Clients Served</div>
+          </div>
+          <div class="glass-card p-4 text-center">
+            <div class="stat-num text-white font-extrabold text-2xl" data-target="23" data-suffix=" Yrs" data-display="23 Yrs">23 Yrs</div>
+            <div class="text-blue-200 text-xs mt-1 leading-tight">In Business</div>
+          </div>
+          <div class="glass-card p-4 text-center">
+            <div class="stat-num text-white font-extrabold text-2xl" data-target="90" data-suffix="% LTV" data-display="90% LTV">90% LTV</div>
+            <div class="text-blue-200 text-xs mt-1 leading-tight">Max Financing</div>
+          </div>
+        </div>
+
+        <!-- CTAs -->
+        <div class="reveal delay-400 flex gap-4 flex-wrap hero-cta-group" id="get-started">
+          <a href="#" class="btn-shimmer text-center">Explore My Options</a>
+          <a href="#how-it-works" class="btn-shimmer-outline text-center">See How It Works</a>
+        </div>
+
+        <!-- Trust signals -->
+        <div class="reveal delay-500 flex flex-wrap gap-6 mt-8">
+          <div class="flex items-center gap-2 text-blue-200 text-sm">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            No hidden fees
+          </div>
+          <div class="flex items-center gap-2 text-blue-200 text-sm">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Rate lock available
+          </div>
+          <div class="flex items-center gap-2 text-blue-200 text-sm">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Decision in minutes
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero visual card -->
+      <div class="reveal-right delay-200 hidden lg:block parallax-img">
+        <div class="glass-card p-8 relative" style="background:rgba(255,255,255,0.07);">
+          <!-- Mini rate card visual -->
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <div class="text-blue-200 text-xs uppercase tracking-widest mb-1">Starting Rate</div>
+              <div class="text-white font-extrabold" style="font-size:3rem;">8.99<span class="text-2xl">%</span></div>
+              <div class="text-blue-300 text-sm">Variable APR</div>
+            </div>
+            <div class="w-16 h-16 rounded-full flex items-center justify-center" style="background:rgba(26,127,232,0.3);border:2px solid rgba(26,127,232,0.5);">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+            </div>
+          </div>
+          <div class="section-divider mb-6" style="max-width:100%;background:rgba(255,255,255,0.12);"></div>
+          <!-- Mini form preview -->
+          <div class="space-y-3">
+            <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px 16px;border:1px solid rgba(255,255,255,0.12);">
+              <div class="text-blue-300 text-xs mb-1">Estimated Home Value</div>
+              <div class="text-white font-semibold">$450,000</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px 16px;border:1px solid rgba(255,255,255,0.12);">
+              <div class="text-blue-300 text-xs mb-1">Current Mortgage Balance</div>
+              <div class="text-white font-semibold">$220,000</div>
+            </div>
+            <div style="background:rgba(26,127,232,0.25);border-radius:10px;padding:12px 16px;border:1px solid rgba(26,127,232,0.40);">
+              <div class="text-blue-200 text-xs mb-1">Available Equity</div>
+              <div class="text-white font-bold text-lg">$185,000</div>
+            </div>
+          </div>
+          <a href="#" class="btn-shimmer w-full mt-6 block text-center">Get My Rate</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom wave -->
+  <div class="absolute bottom-0 left-0 right-0" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;height:80px;">
+      <path d="M0 40 C360 80 1080 0 1440 40 L1440 80 L0 80 Z" fill="#f0f4fa"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     KEY BENEFITS
+════════════════════════════════════════ -->
+<section id="benefits" class="py-24 bg-[#f0f4fa]">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <div class="reveal section-label mb-3">Why a HELOC?</div>
+      <h2 class="reveal delay-100 font-extrabold text-[#003087]" style="font-size:clamp(2rem,4vw,3rem);">
+        Key Benefits
+      </h2>
+      <p class="reveal delay-200 text-slate-500 mt-4 text-lg max-w-2xl mx-auto">
+        Leverage your home's equity with a flexible credit line designed around your life — not a one-size-fits-all loan.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Benefit 1 -->
+      <div class="glass-card-light reveal p-8">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg,#0057b8,#1a7fe8);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+          </svg>
+        </div>
+        <h3 class="font-bold text-[#003087] text-xl mb-3">Flexible Access to Funds</h3>
+        <p class="text-slate-600 leading-relaxed text-sm">
+          Draw funds as you need them during the draw period — up to your credit limit — and repay only what you borrow. Your line stays open so you can borrow again without reapplying.
+        </p>
+      </div>
+
+      <!-- Benefit 2 -->
+      <div class="glass-card-light reveal delay-100 p-8">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg,#0057b8,#1a7fe8);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+          </svg>
+        </div>
+        <h3 class="font-bold text-[#003087] text-xl mb-3">Interest Only on What You Use</h3>
+        <p class="text-slate-600 leading-relaxed text-sm">
+          During the draw period, you typically make interest-only payments on your outstanding balance — keeping monthly costs low while you maintain access to the full line.
+        </p>
+      </div>
+
+      <!-- Benefit 3 -->
+      <div class="glass-card-light reveal delay-200 p-8">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg,#0057b8,#1a7fe8);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <h3 class="font-bold text-[#003087] text-xl mb-3">Competitive Variable Rates</h3>
+        <p class="text-slate-600 leading-relaxed text-sm">
+          HELOCs typically carry lower rates than credit cards or personal loans because your home serves as collateral — giving you access to larger sums at a fraction of the cost.
+        </p>
+      </div>
+
+      <!-- Benefit 4 -->
+      <div class="glass-card-light reveal delay-100 p-8">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg,#0057b8,#1a7fe8);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h3 class="font-bold text-[#003087] text-xl mb-3">Potential Tax Advantages</h3>
+        <p class="text-slate-600 leading-relaxed text-sm">
+          Interest paid on a HELOC may be tax-deductible when funds are used to buy, build, or substantially improve your home. Consult a tax advisor for your specific situation.
+        </p>
+      </div>
+
+      <!-- Benefit 5 -->
+      <div class="glass-card-light reveal delay-200 p-8">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg,#0057b8,#1a7fe8);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <h3 class="font-bold text-[#003087] text-xl mb-3">Fast, Streamlined Process</h3>
+        <p class="text-slate-600 leading-relaxed text-sm">
+          AmeriSave's digital application lets you get a decision faster. With over 23 years in business and 730K+ clients served, we've made the process as simple as possible.
+        </p>
+      </div>
+
+      <!-- Benefit 6 -->
+      <div class="glass-card-light reveal delay-300 p-8">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg,#0057b8,#1a7fe8);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <h3 class="font-bold text-[#003087] text-xl mb-3">Reusable Credit Line</h3>
+        <p class="text-slate-600 leading-relaxed text-sm">
+          As you pay down your balance, your available credit is replenished — just like a credit card but with your home's equity and far lower rates. Borrow, repay, and borrow again.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Divider -->
+<div class="section-divider my-2"></div>
+
+<!-- ════════════════════════════════════════
+     HOW IT WORKS
+════════════════════════════════════════ -->
+<section id="how-it-works" class="py-24" style="background:linear-gradient(180deg,#f0f4fa 0%,#e8eef8 100%);">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-20">
+      <div class="reveal section-label mb-3">The Process</div>
+      <h2 class="reveal delay-100 font-extrabold text-[#003087]" style="font-size:clamp(2rem,4vw,3rem);">
+        How It Works
+      </h2>
+      <p class="reveal delay-200 text-slate-500 mt-4 text-lg max-w-xl mx-auto">
+        Get from application to funding in four straightforward steps.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-4 gap-8 relative">
+
+      <!-- Step 1 -->
+      <div class="reveal text-center relative">
+        <div class="relative inline-flex items-center justify-center w-16 h-16 rounded-full font-extrabold text-xl text-white mb-6 mx-auto" style="background:linear-gradient(135deg,#003087,#0057b8);box-shadow:0 8px 28px rgba(0,87,184,0.40);">
+          1
+          <!-- connector (hidden on mobile) -->
+          <div class="step-line hidden md:block" aria-hidden="true"></div>
+        </div>
+        <h3 class="font-bold text-[#003087] text-lg mb-2">Apply Online</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">
+          Complete AmeriSave's secure digital application in minutes. You'll share basic information about your home, income, and financial goals.
+        </p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="reveal delay-100 text-center relative">
+        <div class="relative inline-flex items-center justify-center w-16 h-16 rounded-full font-extrabold text-xl text-white mb-6 mx-auto" style="background:linear-gradient(135deg,#0057b8,#1a7fe8);box-shadow:0 8px 28px rgba(0,87,184,0.35);">
+          2
+          <div class="step-line hidden md:block" aria-hidden="true"></div>
+        </div>
+        <h3 class="font-bold text-[#003087] text-lg mb-2">Get Approved</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">
+          Our team reviews your application, verifies your home equity, and assesses your creditworthiness. Approvals can happen quickly with all documentation ready.
+        </p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="reveal delay-200 text-center relative">
+        <div class="relative inline-flex items-center justify-center w-16 h-16 rounded-full font-extrabold text-xl text-white mb-6 mx-auto" style="background:linear-gradient(135deg,#1a7fe8,#00c6ff);box-shadow:0 8px 28px rgba(0,198,255,0.35);">
+          3
+          <div class="step-line hidden md:block" aria-hidden="true"></div>
+        </div>
+        <h3 class="font-bold text-[#003087] text-lg mb-2">Close Your Loan</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">
+          Review and sign your closing documents. Most HELOC closings can be completed quickly, often with a notary at your home or a local signing location.
+        </p>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="reveal delay-300 text-center">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full font-extrabold text-xl text-white mb-6 mx-auto" style="background:linear-gradient(135deg,#003087,#0057b8);box-shadow:0 8px 28px rgba(0,87,184,0.40);">
+          4
+        </div>
+        <h3 class="font-bold text-[#003087] text-lg mb-2">Access Your Funds</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">
+          Your HELOC opens with a draw period — typically 10 years — during which you can access funds via check, online transfer, or a dedicated card. Use what you need, when you need it.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="reveal delay-400 text-center mt-16">
+      <a href="#" class="btn-shimmer inline-block">Start Your Application</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     SMART USES
+════════════════════════════════════════ -->
+<section class="py-24" style="background:linear-gradient(135deg,#001f5c 0%,#003087 40%,#0057b8 100%);">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <div class="reveal section-label mb-3" style="color:#7ec8ff;">Put Your Equity to Work</div>
+      <h2 class="reveal delay-100 text-gradient font-extrabold" style="font-size:clamp(2rem,4vw,3rem);">
+        Smart Uses for a HELOC
+      </h2>
+      <p class="reveal delay-200 text-blue-200 mt-4 text-lg max-w-2xl mx-auto">
+        From home improvements to emergency reserves — a HELOC is one of the most versatile financial tools available to homeowners.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <div class="glass-card reveal p-7">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(26,127,232,0.30);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7ec8ff" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-white font-bold text-base mb-1">Home Improvements</h3>
+            <p class="text-blue-200 text-sm leading-relaxed">Kitchen remodels, bathroom upgrades, additions — invest in your property and potentially increase its value.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card reveal delay-100 p-7">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(26,127,232,0.30);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7ec8ff" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-white font-bold text-base mb-1">Debt Consolidation</h3>
+            <p class="text-blue-200 text-sm leading-relaxed">Pay off high-interest credit cards or personal loans by consolidating into one lower-rate HELOC payment.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card reveal delay-200 p-7">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(26,127,232,0.30);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7ec8ff" stroke-width="2">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-white font-bold text-base mb-1">Education Expenses</h3>
+            <p class="text-blue-200 text-sm leading-relaxed">Fund college tuition or continuing education at rates often lower than private student loans.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card reveal delay-100 p-7">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(26,127,232,0.30);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7ec8ff" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-white font-bold text-base mb-1">Emergency Fund</h3>
+            <p class="text-blue-200 text-sm leading-relaxed">Establish a safety net without paying interest until you actually need to draw on the line.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card reveal delay-200 p-7">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(26,127,232,0.30);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7ec8ff" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-white font-bold text-base mb-1">Medical Expenses</h3>
+            <p class="text-blue-200 text-sm leading-relaxed">Cover unexpected healthcare costs or planned procedures without depleting your savings account.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card reveal delay-300 p-7">
+        <div class="flex items-start gap-4">
+          <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(26,127,232,0.30);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7ec8ff" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-white font-bold text-base mb-1">Investment Properties</h3>
+            <p class="text-blue-200 text-sm leading-relaxed">Use your equity as a down payment on a rental or investment property to grow your portfolio.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     ELIGIBILITY REQUIREMENTS
+════════════════════════════════════════ -->
+<section class="py-24 bg-[#f0f4fa]">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <div class="reveal section-label mb-3">Do You Qualify?</div>
+      <h2 class="reveal delay-100 font-extrabold text-[#003087]" style="font-size:clamp(2rem,4vw,3rem);">
+        Eligibility Requirements
+      </h2>
+      <p class="reveal delay-200 text-slate-500 mt-4 text-lg max-w-xl mx-auto">
+        Most homeowners with equity built up in their primary or secondary residence can qualify.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8 items-start">
+
+      <div class="space-y-4">
+        <div class="glass-card-light reveal p-6 flex gap-4 items-start">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5" style="background:linear-gradient(135deg,#0057b8,#1a7fe8);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-[#003087] mb-1">Sufficient Home Equity</h4>
+            <p class="text-slate-500 text-sm">Typically, lenders require at least 15–20% equity in your home (combined loan-to-value ratio of 80–85%). AmeriSave can finance up to 90% CLTV.</p>
+          </div>
+        </div>
+
+        <div class="glass-card-light reveal delay-100 p-6 flex gap-4 items-start">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5" style="background:linear-gradient(135deg,#0057b8,#1a7fe8);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-[#003087] mb-1">Credit Score Requirements</h4>
+            <p class="text-slate-500 text-sm">A minimum credit score of 620 is generally required, though better rates are available to borrowers with scores of 700 or higher.</p>
+          </div>
+        </div>
+
+        <div class="glass-card-light reveal delay-200 p-6 flex gap-4 items-start">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5" style="background:linear-gradient(135deg,#0057b8,#1a7fe8);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-[#003087] mb-1">Verifiable Income</h4>
+            <p class="text-slate-500 text-sm">You'll need to demonstrate stable, verifiable income. A debt-to-income (DTI) ratio below 43% is typically required.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <div class="glass-card-light reveal p-6 flex gap-4 items-start">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5" style="background:linear-gradient(135deg,#0057b8,#1a7fe8);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-[#003087] mb-1">Primary or Secondary Residence</h4>
+            <p class="text-slate-500 text-sm">HELOCs are available on owner-occupied primary residences and some secondary residences. Investment properties may have different eligibility criteria.</p>
+          </div>
+        </div>
+
+        <div class="glass-card-light reveal delay-100 p-6 flex gap-4 items-start">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5" style="background:linear-gradient(135deg,#0057b8,#1a7fe8);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-[#003087] mb-1">Satisfactory Payment History</h4>
+            <p class="text-slate-500 text-sm">No recent foreclosures, bankruptcies, or serious delinquencies. Consistent mortgage payment history strengthens your application.</p>
+          </div>
+        </div>
+
+        <div class="glass-card-light reveal delay-200 p-6 flex gap-4 items-start">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5" style="background:linear-gradient(135deg,#0057b8,#1a7fe8);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-[#003087] mb-1">Minimum Draw Amount</h4>
+            <p class="text-slate-500 text-sm">HELOCs typically have a minimum draw requirement at closing. The maximum line is determined by your available equity and creditworthiness.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="reveal delay-300 text-center mt-12">
+      <a href="#" class="btn-shimmer inline-block">Check My Eligibility</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     COMPARISON TABLE
+════════════════════════════════════════ -->
+<section id="compare" class="py-24" style="background:linear-gradient(180deg,#e8eef8 0%,#f0f4fa 100%);">
+  <div class="max-w-5xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <div class="reveal section-label mb-3">Side-by-Side</div>
+      <h2 class="reveal delay-100 font-extrabold text-[#003087]" style="font-size:clamp(2rem,4vw,3rem);">
+        HELOC vs. Home Equity Loan
+      </h2>
+      <p class="reveal delay-200 text-slate-500 mt-4 text-lg max-w-xl mx-auto">
+        Both products tap your home equity — but they work very differently. Choose the one that fits your borrowing style.
+      </p>
+    </div>
+
+    <div class="reveal overflow-hidden rounded-3xl shadow-xl" style="border:1px solid rgba(0,87,184,0.14);">
+      <table class="w-full text-sm border-collapse">
+        <!-- Header -->
+        <thead>
+          <tr style="background:linear-gradient(135deg,#003087,#0057b8);">
+            <th class="py-5 px-6 text-left text-white font-semibold text-base w-1/3">Feature</th>
+            <th class="py-5 px-6 text-center font-bold text-white text-base">
+              <div class="flex items-center justify-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-blue-300 inline-block"></span>
+                HELOC
+              </div>
+            </th>
+            <th class="py-5 px-6 text-center font-bold text-blue-200 text-base">
+              <div class="flex items-center justify-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-blue-400 inline-block opacity-60"></span>
+                Home Equity Loan
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white">
+          <tr class="compare-row border-b border-slate-100">
+            <td class="py-4 px-6 font-semibold text-[#003087]">Structure</td>
+            <td class="py-4 px-6 text-center text-slate-600">Revolving line of credit</td>
+            <td class="py-4 px-6 text-center text-slate-400">Lump-sum installment loan</td>
+          </tr>
+          <tr class="compare-row border-b border-slate-100 bg-slate-50">
+            <td class="py-4 px-6 font-semibold text-[#003087]">Interest Rate</td>
+            <td class="py-4 px-6 text-center text-slate-600">Variable (tied to Prime Rate)</td>
+            <td class="py-4 px-6 text-center text-slate-400">Fixed for loan term</td>
+          </tr>
+          <tr class="compare-row border-b border-slate-100">
+            <td class="py-4 px-6 font-semibold text-[#003087]">Draw Period</td>
+            <td class="py-4 px-6 text-center text-slate-600">Typically 10 years</td>
+            <td class="py-4 px-6 text-center text-slate-400">No draw period — funds disbursed at closing</td>
+          </tr>
+          <tr class="compare-row border-b border-slate-100 bg-slate-50">
+            <td class="py-4 px-6 font-semibold text-[#003087]">Repayment Period</td>
+            <td class="py-4 px-6 text-center text-slate-600">Typically 20 years after draw period</td>
+            <td class="py-4 px-6 text-center text-slate-400">Fixed term (5–30 years)</td>
+          </tr>
+          <tr class="compare-row border-b border-slate-100">
+            <td class="py-4 px-6 font-semibold text-[#003087]">Monthly Payments</td>
+            <td class="py-4 px-6 text-center text-slate-600">Interest-only during draw; P&I in repayment</td>
+            <td class="py-4 px-6 text-center text-slate-400">Fixed P&I from the start</td>
+          </tr>
+          <tr class="compare-row border-b border-slate-100 bg-slate-50">
+            <td class="py-4 px-6 font-semibold text-[#003087]">Best For</td>
+            <td class="py-4 px-6 text-center text-slate-600">Ongoing expenses, projects with uncertain costs</td>
+            <td class="py-4 px-6 text-center text-slate-400">One-time lump-sum needs, predictable budgeting</td>
+          </tr>
+          <tr class="compare-row border-b border-slate-100">
+            <td class="py-4 px-6 font-semibold text-[#003087]">Reusable Credit</td>
+            <td class="py-4 px-6 text-center">
+              <span class="inline-flex items-center justify-center w-6 h-6 rounded-full" style="background:#dcfce7;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+            </td>
+            <td class="py-4 px-6 text-center">
+              <span class="inline-flex items-center justify-center w-6 h-6 rounded-full" style="background:#fee2e2;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </span>
+            </td>
+          </tr>
+          <tr class="compare-row bg-slate-50">
+            <td class="py-4 px-6 font-semibold text-[#003087]">Rate Predictability</td>
+            <td class="py-4 px-6 text-center text-slate-400">Variable — can rise or fall</td>
+            <td class="py-4 px-6 text-center text-slate-600">Fixed — fully predictable</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     PROS & CONS
+════════════════════════════════════════ -->
+<section class="py-24 bg-[#f0f4fa]">
+  <div class="max-w-6xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <div class="reveal section-label mb-3">Full Picture</div>
+      <h2 class="reveal delay-100 font-extrabold text-[#003087]" style="font-size:clamp(2rem,4vw,3rem);">
+        HELOC Pros &amp; Cons
+      </h2>
+      <p class="reveal delay-200 text-slate-500 mt-4 text-lg max-w-xl mx-auto">
+        Make an informed decision with a clear look at both sides of a HELOC.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8">
+
+      <!-- Pros -->
+      <div class="glass-card-light pros-cons-card reveal p-8 overflow-hidden relative">
+        <div class="absolute top-0 right-0 w-32 h-32 rounded-full opacity-10" style="background:radial-gradient(circle,#16a34a,transparent);transform:translate(25%,-25%);"></div>
+        <div class="flex items-center gap-3 mb-7">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#dcfce7;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3 class="font-extrabold text-xl text-[#003087]">Pros</h3>
+        </div>
+        <ul class="space-y-4">
+          <li class="flex gap-3 items-start">
+            <span class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style="background:#dcfce7;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <div><span class="font-semibold text-[#003087]">Flexibility:</span> <span class="text-slate-600 text-sm">Only borrow what you need; your credit line is reusable throughout the draw period.</span></div>
+          </li>
+          <li class="flex gap-3 items-start">
+            <span class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style="background:#dcfce7;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <div><span class="font-semibold text-[#003087]">Lower Initial Rates:</span> <span class="text-slate-600 text-sm">Variable rates are often lower than credit cards or unsecured personal loans.</span></div>
+          </li>
+          <li class="flex gap-3 items-start">
+            <span class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style="background:#dcfce7;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <div><span class="font-semibold text-[#003087]">Interest-Only Payments:</span> <span class="text-slate-600 text-sm">Keep cash flow manageable during the draw period by paying only interest.</span></div>
+          </li>
+          <li class="flex gap-3 items-start">
+            <span class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style="background:#dcfce7;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <div><span class="font-semibold text-[#003087]">Potential Tax Deduction:</span> <span class="text-slate-600 text-sm">Interest may be deductible if funds are used to substantially improve your home (consult a tax professional).</span></div>
+          </li>
+          <li class="flex gap-3 items-start">
+            <span class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style="background:#dcfce7;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <div><span class="font-semibold text-[#003087]">No Interest Until You Draw:</span> <span class="text-slate-600 text-sm">The credit line costs nothing while idle — useful as an emergency backup.</span></div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Cons -->
+      <div class="glass-card-light pros-cons-card reveal delay-100 p-8 overflow-hidden relative">
+        <div class="absolute top-0 right-0 w-32 h-32 rounded-full opacity-10" style="background:radial-gradient(circle,#dc2626,transparent);transform:translate(25%,-25%);"></div>
+        <div class="flex items-center gap-3 mb-7">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#fee2e2;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </div>
+          <h3 class="font-extrabold text-xl text-[#003087]">Cons</h3>
+        </div>
+        <ul class="space-y-4">
+          <li class="flex gap-3 items-start">
+            <span class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style="background:#fee2e2;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </span>
+            <div><span class="font-semibold text-[#003087]">Variable Rate Risk:</span> <span class="text-slate-600 text-sm">Your rate can rise if the Prime Rate increases, making future payments less predictable.</span></div>
+          </li>
+          <li class="flex gap-3 items-start">
+            <span class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style="background:#fee2e2;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </span>
+            <div><span class="font-semibold text-[#003087]">Home as Collateral:</span> <span class="text-slate-600 text-sm">Failing to repay could put your home at risk of foreclosure.</span></div>
+          </li>
+          <li class="flex gap-3 items-start">
+            <span class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style="background:#fee2e2;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </span>
+            <div><span class="font-semibold text-[#003087]">Payment Increase at Repayment:</span> <span class="text-slate-600 text-sm">Once the draw period ends, payments jump from interest-only to full P&I, which can be a shock.</span></div>
+          </li>
+          <li class="flex gap-3 items-start">
+            <span class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style="background:#fee2e2;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </span>
+            <div><span class="font-semibold text-[#003087]">Possible Freezing of Credit Line:</span> <span class="text-slate-600 text-sm">Lenders can reduce or freeze your line if home values decline or your financial situation changes.</span></div>
+          </li>
+          <li class="flex gap-3 items-start">
+            <span class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style="background:#fee2e2;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </span>
+            <div><span class="font-semibold text-[#003087]">Closing Costs:</span> <span class="text-slate-600 text-sm">HELOCs typically carry closing costs including appraisal, title, and recording fees.</span></div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     CTA BAND
+════════════════════════════════════════ -->
+<section class="py-20" style="background:linear-gradient(135deg,#001f5c 0%,#003087 50%,#0057b8 100%);">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <div class="reveal">
+      <div class="section-label mb-4" style="color:#7ec8ff;">Ready to Get Started?</div>
+      <h2 class="text-gradient font-extrabold mb-5" style="font-size:clamp(2rem,4vw,3rem);">
+        Your Home's Equity Is Waiting
+      </h2>
+      <p class="text-blue-200 text-lg mb-10 max-w-2xl mx-auto">
+        Over 730,000 homeowners have trusted AmeriSave for their mortgage needs. Join them and put your equity to work today.
+      </p>
+      <div class="flex gap-4 justify-center flex-wrap">
+        <a href="#" class="btn-shimmer">Explore My Options</a>
+        <a href="tel:18669701374" class="btn-shimmer-outline" style="border-color:rgba(255,255,255,0.5);color:white;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'">
+          Call 1-866-970-1374
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     FAQ
+════════════════════════════════════════ -->
+<section id="faq" class="py-24 bg-[#f0f4fa]">
+  <div class="max-w-3xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <div class="reveal section-label mb-3">Got Questions?</div>
+      <h2 class="reveal delay-100 font-extrabold text-[#003087]" style="font-size:clamp(2rem,4vw,3rem);">
+        Frequently Asked Questions
+      </h2>
+    </div>
+
+    <div class="space-y-3">
+
+      <!-- FAQ 1 -->
+      <div class="glass-card-light reveal overflow-hidden">
+        <details>
+          <summary class="flex items-center justify-between p-6 gap-4">
+            <span class="font-semibold text-[#003087] text-base">What is a HELOC and how does it differ from a home equity loan?</span>
+            <span class="faq-icon w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(0,87,184,0.10);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0057b8" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </summary>
+          <div class="faq-body">
+            <div class="px-6 pb-6 text-slate-600 text-sm leading-relaxed">
+              A HELOC (Home Equity Line of Credit) is a revolving line of credit secured by your home. Unlike a home equity loan — which gives you a lump sum at a fixed rate — a HELOC lets you draw funds up to your credit limit during a set draw period (usually 10 years), then repay over a repayment period (usually 20 years). You only pay interest on what you actually borrow, and as you repay, your available credit is restored.
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- FAQ 2 -->
+      <div class="glass-card-light reveal delay-100 overflow-hidden">
+        <details>
+          <summary class="flex items-center justify-between p-6 gap-4">
+            <span class="font-semibold text-[#003087] text-base">How much can I borrow with a HELOC?</span>
+            <span class="faq-icon w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(0,87,184,0.10);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0057b8" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </summary>
+          <div class="faq-body">
+            <div class="px-6 pb-6 text-slate-600 text-sm leading-relaxed">
+              Your borrowing limit depends on your home's appraised value, your existing mortgage balance, your credit score, and your income. AmeriSave can finance up to 90% of your home's combined loan-to-value (CLTV). For example, if your home is worth $400,000 and you owe $250,000, you may be able to access up to $110,000 (90% × $400,000 = $360,000 − $250,000 = $110,000).
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- FAQ 3 -->
+      <div class="glass-card-light reveal delay-200 overflow-hidden">
+        <details>
+          <summary class="flex items-center justify-between p-6 gap-4">
+            <span class="font-semibold text-[#003087] text-base">What are the current HELOC interest rates?</span>
+            <span class="faq-icon w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(0,87,184,0.10);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0057b8" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </summary>
+          <div class="faq-body">
+            <div class="px-6 pb-6 text-slate-600 text-sm leading-relaxed">
+              HELOC rates are variable and typically tied to the Prime Rate plus a margin determined by your creditworthiness, equity, and lender. Rates fluctuate with Federal Reserve policy. The best way to see your personalized rate is to apply — AmeriSave will provide you a customized quote based on your specific financial profile and home equity.
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- FAQ 4 -->
+      <div class="glass-card-light reveal delay-100 overflow-hidden">
+        <details>
+          <summary class="flex items-center justify-between p-6 gap-4">
+            <span class="font-semibold text-[#003087] text-base">How long does it take to get a HELOC?</span>
+            <span class="faq-icon w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(0,87,184,0.10);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0057b8" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </summary>
+          <div class="faq-body">
+            <div class="px-6 pb-6 text-slate-600 text-sm leading-relaxed">
+              The timeline varies but typically ranges from 2 to 6 weeks from application to closing. This includes the time to complete the application, appraise your home, underwrite the loan, and schedule closing. AmeriSave's streamlined digital process helps reduce delays — having all your documentation ready (income verification, tax returns, mortgage statement) can speed things up significantly.
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- FAQ 5 -->
+      <div class="glass-card-light reveal delay-200 overflow-hidden">
+        <details>
+          <summary class="flex items-center justify-between p-6 gap-4">
+            <span class="font-semibold text-[#003087] text-base">Can I lock in a fixed rate on a HELOC?</span>
+            <span class="faq-icon w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(0,87,184,0.10);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0057b8" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </summary>
+          <div class="faq-body">
+            <div class="px-6 pb-6 text-slate-600 text-sm leading-relaxed">
+              Some lenders offer a "rate lock" or "fixed-rate advance" feature that lets you convert all or a portion of your HELOC balance to a fixed rate. This can provide payment predictability for specific draws. Ask an AmeriSave loan officer about the rate lock options available on your HELOC.
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- FAQ 6 -->
+      <div class="glass-card-light reveal delay-100 overflow-hidden">
+        <details>
+          <summary class="flex items-center justify-between p-6 gap-4">
+            <span class="font-semibold text-[#003087] text-base">What happens when the draw period ends?</span>
+            <span class="faq-icon w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(0,87,184,0.10);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0057b8" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </summary>
+          <div class="faq-body">
+            <div class="px-6 pb-6 text-slate-600 text-sm leading-relaxed">
+              Once the draw period ends (typically after 10 years), the HELOC enters the repayment period — usually 20 years. You can no longer draw funds, and your monthly payments increase to cover both principal and interest on the outstanding balance. It's important to plan for this payment increase ahead of time. Some borrowers choose to refinance at this stage.
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- FAQ 7 -->
+      <div class="glass-card-light reveal delay-200 overflow-hidden">
+        <details>
+          <summary class="flex items-center justify-between p-6 gap-4">
+            <span class="font-semibold text-[#003087] text-base">Is HELOC interest tax-deductible?</span>
+            <span class="faq-icon w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(0,87,184,0.10);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0057b8" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </summary>
+          <div class="faq-body">
+            <div class="px-6 pb-6 text-slate-600 text-sm leading-relaxed">
+              Under current IRS rules (as of 2018 Tax Cuts and Jobs Act), interest on a HELOC is deductible only if the loan proceeds are used to "buy, build, or substantially improve" the home securing the loan. Interest used for other purposes (debt consolidation, personal expenses) is generally not deductible. Always consult a qualified tax advisor to understand the deductibility for your situation.
+            </div>
+          </div>
+        </details>
+      </div>
+
+    </div>
+
+    <div class="reveal delay-300 text-center mt-12">
+      <p class="text-slate-500 mb-6">Still have questions? Our loan officers are standing by.</p>
+      <div class="flex gap-4 justify-center flex-wrap">
+        <a href="#" class="btn-shimmer">Talk to a Loan Officer</a>
+        <a href="#" class="btn-shimmer-outline">Learn More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer style="background:#001234;border-top:1px solid rgba(255,255,255,0.07);">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+    <div class="grid md:grid-cols-4 gap-10 mb-12">
+      <div class="md:col-span-2">
+        <div class="flex items-center gap-2 mb-4">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="8" fill="#1a7fe8"/>
+            <path d="M6 24 L16 8 L26 24 Z" fill="white" opacity="0.9"/>
+            <path d="M11 24 L16 15 L21 24 Z" fill="white" opacity="0.55"/>
+          </svg>
+          <span class="text-white font-bold text-lg">AmeriSave Mortgage</span>
+        </div>
+        <p class="text-slate-400 text-sm leading-relaxed max-w-sm">
+          AmeriSave Mortgage Corporation — NMLS #1168. Licensed to originate mortgage loans in 49 states and DC. Equal Housing Lender.
+        </p>
+        <div class="flex gap-4 mt-6">
+          <a href="#" class="w-9 h-9 rounded-full flex items-center justify-center transition-colors" style="background:rgba(255,255,255,0.07);" onmouseover="this.style.background='rgba(26,127,232,0.4)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-white">
+              <path d="M24 4.56v14.91A4.53 4.53 0 0119.47 24H4.53A4.53 4.53 0 010 19.47V4.53A4.53 4.53 0 014.53 0h14.94A4.53 4.53 0 0124 4.53v.03z"/>
+            </svg>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-full flex items-center justify-center transition-colors" style="background:rgba(255,255,255,0.07);" onmouseover="this.style.background='rgba(26,127,232,0.4)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8">
+              <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4 text-sm tracking-wide uppercase">Loan Products</h4>
+        <ul class="space-y-2 text-sm text-slate-400">
+          <li><a href="#" class="hover:text-white transition-colors">Purchase Loans</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Refinance</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">HELOC</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">VA Loans</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">FHA Loans</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Jumbo Loans</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4 text-sm tracking-wide uppercase">Company</h4>
+        <ul class="space-y-2 text-sm text-slate-400">
+          <li><a href="#" class="hover:text-white transition-colors">About AmeriSave</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Press Room</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Terms of Use</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-white border-opacity-10 pt-8 text-xs text-slate-500 leading-relaxed">
+      <p class="mb-2">
+        © 2024 AmeriSave Mortgage Corporation. All Rights Reserved. NMLS #1168.
+        1 West Court Square, Suite 750, Decatur, GA 30030.
+        AmeriSave Mortgage Corporation is licensed to originate mortgage loans in all 50 states and Washington, DC.
+      </p>
+      <p>
+        Rates, terms, and availability of programs are subject to change without notice. All loans are subject to credit approval. This is not a commitment to lend.
+        Equal Housing Lender. All product and company names are trademarks of their respective holders.
+      </p>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════ -->
+<script>
+(function() {
+  'use strict';
+
+  // ── Respect prefers-reduced-motion ──
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ── Scroll progress bar ──
+  const progressBar = document.getElementById('progress-bar');
+  function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+
+  // ── Scroll-reveal (IntersectionObserver) ──
+  if (!prefersReducedMotion) {
+    const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+  } else {
+    // Instantly show all
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+      el.classList.add('visible');
+    });
+  }
+
+  // ── Count-up animation ──
+  function animateCountUp(el) {
+    if (prefersReducedMotion) return;
+    const display = el.dataset.display;
+    // Extract numeric part
+    const match = display.match(/^([\d,]+)/);
+    if (!match) return;
+    const target = parseInt(match[1].replace(/,/g, ''), 10);
+    const suffix = display.replace(match[1], '');
+    const duration = 1800;
+    const startTime = performance.now();
+
+    function tick(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(eased * target);
+      let displayVal;
+      if (target >= 1000) {
+        displayVal = (current >= 1000 ? Math.floor(current / 1000) + 'K' : current);
+      } else {
+        displayVal = current;
+      }
+      el.textContent = displayVal + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  if (!prefersReducedMotion) {
+    const statEls = document.querySelectorAll('.stat-num[data-target]');
+    const statObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCountUp(entry.target);
+          statObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    statEls.forEach(el => statObserver.observe(el));
+  }
+
+  // ── Parallax hero ──
+  if (!prefersReducedMotion) {
+    const parallaxImg = document.querySelector('.parallax-img');
+    if (parallaxImg) {
+      window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        parallaxImg.style.transform = `translateY(${scrollY * 0.12}px)`;
+      }, { passive: true });
+    }
+  }
+
+  // ── FAQ accordion: close others when one opens ──
+  const allDetails = document.querySelectorAll('details');
+  allDetails.forEach(detail => {
+    detail.addEventListener('toggle', () => {
+      if (detail.open) {
+        allDetails.forEach(other => {
+          if (other !== detail && other.open) other.open = false;
+        });
+      }
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
