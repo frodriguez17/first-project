@@ -26,36 +26,223 @@
             }
           },
           boxShadow: {
-            card: '0 2px 16px 0 rgba(11,61,145,0.08)',
-            cta:  '0 4px 24px 0 rgba(11,61,145,0.30)',
-          }
+            card:   '0 2px 16px 0 rgba(11,61,145,0.08)',
+            glass:  '0 8px 32px 0 rgba(11,61,145,0.12)',
+            cta:    '0 4px 24px 0 rgba(11,61,145,0.30)',
+            glow:   '0 0 0 1px rgba(11,61,145,0.4), 0 8px 32px rgba(11,61,145,0.2)',
+            'glow-accent': '0 0 0 1px rgba(255,107,43,0.4), 0 8px 32px rgba(255,107,43,0.25)',
+          },
+          backdropBlur: { xs: '2px' },
+          keyframes: {
+            'mesh-shift': {
+              '0%, 100%': { backgroundPosition: '0% 50%' },
+              '33%':       { backgroundPosition: '100% 0%' },
+              '66%':       { backgroundPosition: '50% 100%' },
+            },
+            'fade-up': {
+              '0%':   { opacity: '0', transform: 'translateY(28px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            shimmer: {
+              '0%':   { transform: 'translateX(-100%) skewX(-15deg)' },
+              '100%': { transform: 'translateX(250%) skewX(-15deg)' },
+            },
+            'count-pulse': {
+              '0%, 100%': { opacity: '1' },
+              '50%':       { opacity: '0.7' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%':       { transform: 'translateY(-8px)' },
+            },
+          },
+          animation: {
+            'mesh-shift':   'mesh-shift 12s ease-in-out infinite',
+            'fade-up':      'fade-up 0.6s ease-out both',
+            shimmer:        'shimmer 0.7s ease-in-out',
+            'count-pulse':  'count-pulse 0.4s ease-in-out',
+            float:          'float 6s ease-in-out infinite',
+          },
         }
       }
     }
   </script>
   <style>
+    /* ── Motion safety ── */
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { transition: none !important; animation: none !important; }
+      *, *::before, *::after {
+        transition: none !important;
+        animation: none !important;
+      }
+      .parallax-hero { transform: none !important; }
     }
-    .hero-gradient {
-      background: linear-gradient(135deg, #071F4F 0%, #0B3D91 55%, #1A5CB8 100%);
+
+    /* ── Scroll progress bar ── */
+    #scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, #0B3D91 0%, #FF6B2B 100%);
+      z-index: 100;
+      transition: width 0.1s linear;
+      border-radius: 0 2px 2px 0;
     }
-    .section-wave {
-      background: linear-gradient(180deg, #f8faff 0%, #ffffff 100%);
+
+    /* ── Animated gradient mesh hero ── */
+    .hero-mesh {
+      background: linear-gradient(
+        135deg,
+        #071F4F 0%,
+        #0B3D91 25%,
+        #1A3A6B 50%,
+        #0D4B9E 75%,
+        #071F4F 100%
+      );
+      background-size: 300% 300%;
+      animation: mesh-shift 12s ease-in-out infinite;
     }
-    .check-icon::before {
+
+    /* ── Glassmorphism card ── */
+    .glass-card {
+      background: rgba(255,255,255,0.65);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid rgba(255,255,255,0.5);
+      box-shadow: 0 8px 32px rgba(11,61,145,0.10);
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+    }
+    .glass-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 0 1.5px rgba(11,61,145,0.35), 0 16px 40px rgba(11,61,145,0.18);
+      border-color: rgba(11,61,145,0.3);
+    }
+
+    /* Dark-section glass (navy bg) */
+    .glass-dark {
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(12px) saturate(160%);
+      -webkit-backdrop-filter: blur(12px) saturate(160%);
+      border: 1px solid rgba(255,255,255,0.12);
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease;
+    }
+    .glass-dark:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.10);
+      border-color: rgba(255,255,255,0.25);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.2), 0 12px 32px rgba(0,0,0,0.25);
+    }
+
+    /* ── CTA shimmer effect ── */
+    .btn-shimmer {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-shimmer::after {
       content: '';
-      display: block;
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
+      position: absolute;
+      top: -50%; left: -60%;
+      width: 40%; height: 200%;
+      background: linear-gradient(
+        105deg,
+        transparent 30%,
+        rgba(255,255,255,0.35) 50%,
+        transparent 70%
+      );
+      transform: translateX(-100%) skewX(-15deg);
+    }
+    .btn-shimmer:hover::after {
+      animation: shimmer 0.65s ease-in-out;
+    }
+
+    /* ── Scroll-reveal base ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ── Pros/cons card scale ── */
+    .scale-card {
+      transition: transform 250ms ease, box-shadow 250ms ease;
+    }
+    .scale-card:hover {
+      transform: scale(1.025);
+      box-shadow: 0 20px 48px rgba(11,61,145,0.14);
+    }
+
+    /* ── Table row hover ── */
+    .table-row {
+      transition: background-color 180ms ease;
+    }
+    .table-row:hover {
+      background-color: rgba(232,240,252,0.7);
+    }
+
+    /* ── Parallax hero ── */
+    .parallax-hero {
+      will-change: transform;
+    }
+
+    /* ── Step connector animation ── */
+    .step-connector {
+      position: absolute;
+      top: 40px; left: 12.5%; right: 12.5%;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(11,61,145,0.2), rgba(11,61,145,0.6), rgba(11,61,145,0.2));
+      overflow: hidden;
+    }
+    .step-connector::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,107,43,0.7), transparent);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    /* ── Hero stats glass card ── */
+    .hero-glass {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+
+    /* ── Eligibility CTA glass ── */
+    .elg-glass {
+      background: rgba(232,240,252,0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(11,61,145,0.12);
+    }
+
+    /* ── FAQ details transition ── */
+    details > div {
+      overflow: hidden;
+    }
+
+    /* ── Number counter ── */
+    .stat-num {
+      display: inline-block;
     }
   </style>
 </head>
 <body class="font-sans text-slate-800 bg-white antialiased">
 
-  <!-- ─── NAVBAR ─── -->
-  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-slate-100 shadow-sm">
+  <!-- ── SCROLL PROGRESS ── -->
+  <div id="scroll-progress" role="progressbar" aria-label="Page scroll progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+
+  <!-- ── NAVBAR ── -->
+  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100/80 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
       <a href="https://amerisave.com" aria-label="AmeriSave Home" class="flex items-center gap-2 cursor-pointer">
         <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
@@ -63,7 +250,7 @@
           <path d="M18 6L30 26H6L18 6Z" fill="white" opacity="0.9"/>
           <rect x="14" y="19" width="8" height="7" rx="1" fill="#FF6B2B"/>
         </svg>
-        <span class="text-xl font-700 text-brand-blue tracking-tight font-bold">AmeriSave</span>
+        <span class="text-xl font-bold text-brand-blue tracking-tight">AmeriSave</span>
       </a>
       <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
         <a href="#benefits"     class="hover:text-brand-blue transition-colors duration-200 cursor-pointer">Benefits</a>
@@ -72,38 +259,41 @@
         <a href="#faq"          class="hover:text-brand-blue transition-colors duration-200 cursor-pointer">FAQ</a>
       </nav>
       <a href="#explore"
-         class="inline-flex items-center gap-2 bg-brand-accent text-white text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-orange-600 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2">
+         class="btn-shimmer inline-flex items-center gap-2 bg-brand-accent text-white text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-orange-600 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2">
         Get Started
       </a>
     </div>
   </header>
 
-  <!-- ─── HERO ─── -->
-  <section class="hero-gradient relative overflow-hidden">
-    <!-- subtle grid overlay -->
-    <div class="absolute inset-0 opacity-5" style="background-image: url(\"data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M0 0h1v40H0zm40 0h-1v40h1zM0 0v1h40V0zm0 40v-1h40v1z'/%3E%3C/g%3E%3C/svg%3E\");" aria-hidden="true"></div>
+  <!-- ── HERO ── -->
+  <section class="hero-mesh relative overflow-hidden min-h-[85vh] flex items-center">
+    <!-- Grid overlay -->
+    <div class="absolute inset-0 opacity-[0.04]" style="background-image:url(\"data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M0 0h1v40H0zm40 0h-1v40h1zM0 0v1h40V0zm0 40v-1h40v1z'/%3E%3C/g%3E%3C/svg%3E\");" aria-hidden="true"></div>
+    <!-- Glowing orbs -->
+    <div class="absolute top-1/4 left-1/3 w-96 h-96 bg-brand-light/20 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute bottom-0 right-1/4 w-64 h-64 bg-brand-accent/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
 
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 lg:py-32">
+    <div class="parallax-hero relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 lg:py-32 w-full">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <!-- Left: copy -->
         <div>
-          <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-white/90 text-xs font-medium mb-6">
+          <div class="reveal inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-white/90 text-xs font-medium mb-6">
             <svg class="w-3.5 h-3.5 text-brand-gold" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
             </svg>
             Trusted by 1M+ American homeowners
           </div>
-          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight mb-6">
+          <h1 class="reveal reveal-delay-1 text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight mb-6">
             Unlock Your<br/>
             <span class="text-brand-gold">Home's Equity.</span><br/>
             On Your Terms.
           </h1>
-          <p class="text-lg md:text-xl text-white/80 leading-relaxed mb-8 max-w-xl">
+          <p class="reveal reveal-delay-2 text-lg md:text-xl text-white/80 leading-relaxed mb-8 max-w-xl">
             A Home Equity Line of Credit (HELOC) lets you borrow against your home's value — flexibly, affordably, and on your schedule. Access funds when you need them, and pay interest only on what you use.
           </p>
 
           <!-- Trust signals -->
-          <div class="flex flex-wrap gap-4 mb-10">
+          <div class="reveal reveal-delay-2 flex flex-wrap gap-4 mb-10">
             <div class="flex items-center gap-2 text-white/70 text-sm">
               <svg class="w-4 h-4 text-brand-success flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
               No hidden fees
@@ -118,35 +308,35 @@
             </div>
           </div>
 
-          <!-- Primary CTA -->
-          <div id="explore" class="flex flex-col sm:flex-row gap-4">
+          <!-- Primary CTAs -->
+          <div id="explore" class="reveal reveal-delay-3 flex flex-col sm:flex-row gap-4">
             <a href="https://amerisave.com/apply"
-               class="inline-flex items-center justify-center gap-2 bg-brand-accent text-white text-lg font-semibold px-8 py-4 rounded-xl shadow-cta hover:bg-orange-600 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2 focus:ring-offset-brand-navy">
+               class="btn-shimmer inline-flex items-center justify-center gap-2 bg-brand-accent text-white text-lg font-semibold px-8 py-4 rounded-xl shadow-cta hover:bg-orange-600 hover:shadow-glow-accent transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2 focus:ring-offset-brand-navy">
               Explore My Options
               <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </a>
             <a href="#how-it-works"
-               class="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/30 text-white text-lg font-medium px-8 py-4 rounded-xl hover:bg-white/20 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/50">
+               class="btn-shimmer inline-flex items-center justify-center gap-2 bg-white/10 border border-white/30 text-white text-lg font-medium px-8 py-4 rounded-xl hover:bg-white/20 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/50">
               See How It Works
             </a>
           </div>
         </div>
 
-        <!-- Right: stats card -->
-        <div class="hidden lg:block">
-          <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8">
+        <!-- Right: stats glass card -->
+        <div class="hidden lg:block reveal reveal-delay-4">
+          <div class="hero-glass rounded-2xl p-8 animation-float" style="animation: float 6s ease-in-out infinite;">
             <p class="text-white/60 text-sm font-medium uppercase tracking-wider mb-6">Why Homeowners Choose AmeriSave</p>
             <div class="grid grid-cols-2 gap-6">
               <div>
-                <p class="text-4xl font-bold text-white mb-1">$500K</p>
+                <p class="text-4xl font-bold text-white mb-1"><span class="stat-num" data-target="500" data-prefix="$" data-suffix="K">$500K</span></p>
                 <p class="text-white/70 text-sm">Max credit line available</p>
               </div>
               <div>
-                <p class="text-4xl font-bold text-brand-gold mb-1">10yr</p>
+                <p class="text-4xl font-bold text-brand-gold mb-1"><span class="stat-num" data-target="10" data-suffix="yr">10yr</span></p>
                 <p class="text-white/70 text-sm">Flexible draw period</p>
               </div>
               <div>
-                <p class="text-4xl font-bold text-white mb-1">20yr</p>
+                <p class="text-4xl font-bold text-white mb-1"><span class="stat-num" data-target="20" data-suffix="yr">20yr</span></p>
                 <p class="text-white/70 text-sm">Repayment period</p>
               </div>
               <div>
@@ -170,59 +360,58 @@
     </div>
   </section>
 
-  <!-- ─── KEY BENEFITS ─── -->
+  <!-- ── KEY BENEFITS ── -->
   <section id="benefits" class="py-20 bg-brand-sky">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-14">
+      <div class="text-center mb-14 reveal">
         <p class="text-brand-blue text-sm font-semibold uppercase tracking-widest mb-3">Why a HELOC?</p>
         <h2 class="text-3xl md:text-4xl font-bold text-brand-navy mb-4">Key Benefits of a HELOC</h2>
         <p class="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed">Borrow smarter. A HELOC gives you a revolving line of credit at lower interest rates than personal loans or credit cards — secured by the equity you've already built.</p>
       </div>
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Benefit cards -->
-        <div class="bg-white rounded-2xl p-6 shadow-card hover:shadow-lg transition-shadow duration-200 cursor-default">
-          <div class="w-12 h-12 bg-brand-sky rounded-xl flex items-center justify-center mb-4">
+        <div class="glass-card rounded-2xl p-6 cursor-default reveal reveal-delay-1">
+          <div class="w-12 h-12 bg-brand-blue/10 rounded-xl flex items-center justify-center mb-4">
             <svg class="w-6 h-6 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
           </div>
           <h3 class="text-lg font-semibold text-brand-navy mb-2">Flexible Credit Line</h3>
           <p class="text-slate-600 text-sm leading-relaxed">Access funds up to your credit limit anytime during your draw period — borrow, repay, and borrow again as your needs change.</p>
         </div>
 
-        <div class="bg-white rounded-2xl p-6 shadow-card hover:shadow-lg transition-shadow duration-200 cursor-default">
-          <div class="w-12 h-12 bg-brand-sky rounded-xl flex items-center justify-center mb-4">
+        <div class="glass-card rounded-2xl p-6 cursor-default reveal reveal-delay-2">
+          <div class="w-12 h-12 bg-brand-blue/10 rounded-xl flex items-center justify-center mb-4">
             <svg class="w-6 h-6 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
           </div>
           <h3 class="text-lg font-semibold text-brand-navy mb-2">Competitive Interest Rates</h3>
           <p class="text-slate-600 text-sm leading-relaxed">HELOCs typically carry lower rates than credit cards or personal loans because they're secured by your home's equity.</p>
         </div>
 
-        <div class="bg-white rounded-2xl p-6 shadow-card hover:shadow-lg transition-shadow duration-200 cursor-default">
-          <div class="w-12 h-12 bg-brand-sky rounded-xl flex items-center justify-center mb-4">
+        <div class="glass-card rounded-2xl p-6 cursor-default reveal reveal-delay-3">
+          <div class="w-12 h-12 bg-brand-blue/10 rounded-xl flex items-center justify-center mb-4">
             <svg class="w-6 h-6 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
           </div>
           <h3 class="text-lg font-semibold text-brand-navy mb-2">Interest-Only Payments</h3>
           <p class="text-slate-600 text-sm leading-relaxed">During your draw period, pay interest only on what you've borrowed — keeping monthly payments lower while you access funds.</p>
         </div>
 
-        <div class="bg-white rounded-2xl p-6 shadow-card hover:shadow-lg transition-shadow duration-200 cursor-default">
-          <div class="w-12 h-12 bg-brand-sky rounded-xl flex items-center justify-center mb-4">
+        <div class="glass-card rounded-2xl p-6 cursor-default reveal reveal-delay-1">
+          <div class="w-12 h-12 bg-brand-blue/10 rounded-xl flex items-center justify-center mb-4">
             <svg class="w-6 h-6 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
           </div>
           <h3 class="text-lg font-semibold text-brand-navy mb-2">10-Year Draw Period</h3>
           <p class="text-slate-600 text-sm leading-relaxed">Use your credit line for up to 10 years. Take funds in stages rather than all at once — ideal for ongoing projects or expenses.</p>
         </div>
 
-        <div class="bg-white rounded-2xl p-6 shadow-card hover:shadow-lg transition-shadow duration-200 cursor-default">
-          <div class="w-12 h-12 bg-brand-sky rounded-xl flex items-center justify-center mb-4">
+        <div class="glass-card rounded-2xl p-6 cursor-default reveal reveal-delay-2">
+          <div class="w-12 h-12 bg-brand-blue/10 rounded-xl flex items-center justify-center mb-4">
             <svg class="w-6 h-6 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
           </div>
           <h3 class="text-lg font-semibold text-brand-navy mb-2">Leverage Your Home's Value</h3>
           <p class="text-slate-600 text-sm leading-relaxed">Your home's equity is a powerful financial asset. A HELOC lets you put that built-up value to work for you — at favorable terms.</p>
         </div>
 
-        <div class="bg-white rounded-2xl p-6 shadow-card hover:shadow-lg transition-shadow duration-200 cursor-default">
-          <div class="w-12 h-12 bg-brand-sky rounded-xl flex items-center justify-center mb-4">
+        <div class="glass-card rounded-2xl p-6 cursor-default reveal reveal-delay-3">
+          <div class="w-12 h-12 bg-brand-blue/10 rounded-xl flex items-center justify-center mb-4">
             <svg class="w-6 h-6 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
           </div>
           <h3 class="text-lg font-semibold text-brand-navy mb-2">Potential Tax Benefits</h3>
@@ -232,22 +421,21 @@
     </div>
   </section>
 
-  <!-- ─── HOW IT WORKS ─── -->
+  <!-- ── HOW IT WORKS ── -->
   <section id="how-it-works" class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-14">
+      <div class="text-center mb-14 reveal">
         <p class="text-brand-blue text-sm font-semibold uppercase tracking-widest mb-3">Simple Process</p>
         <h2 class="text-3xl md:text-4xl font-bold text-brand-navy mb-4">How a HELOC Works</h2>
         <p class="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed">Getting started with a HELOC is straightforward. Here's what to expect from application to accessing your funds.</p>
       </div>
 
-      <!-- Steps -->
+      <!-- Steps — staggered fade-in -->
       <div class="grid md:grid-cols-4 gap-8 relative">
-        <!-- connector line desktop -->
-        <div class="hidden md:block absolute top-10 left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-brand-blue/20 via-brand-blue/60 to-brand-blue/20" aria-hidden="true"></div>
+        <div class="step-connector hidden md:block" aria-hidden="true"></div>
 
-        <div class="flex flex-col items-center text-center">
-          <div class="relative z-10 w-20 h-20 bg-brand-blue rounded-2xl flex items-center justify-center mb-5 shadow-cta">
+        <div class="flex flex-col items-center text-center reveal reveal-delay-1">
+          <div class="relative z-10 w-20 h-20 bg-brand-blue rounded-2xl flex items-center justify-center mb-5 shadow-cta transition-transform duration-200 hover:-translate-y-1">
             <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
           </div>
           <div class="w-7 h-7 bg-brand-blue rounded-full flex items-center justify-center text-white text-xs font-bold mb-3">1</div>
@@ -255,8 +443,8 @@
           <p class="text-slate-600 text-sm leading-relaxed">Complete our simple online application in minutes. No paperwork piles — just the information we need to get started.</p>
         </div>
 
-        <div class="flex flex-col items-center text-center">
-          <div class="relative z-10 w-20 h-20 bg-brand-blue rounded-2xl flex items-center justify-center mb-5 shadow-cta">
+        <div class="flex flex-col items-center text-center reveal reveal-delay-2">
+          <div class="relative z-10 w-20 h-20 bg-brand-blue rounded-2xl flex items-center justify-center mb-5 shadow-cta transition-transform duration-200 hover:-translate-y-1">
             <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
           </div>
           <div class="w-7 h-7 bg-brand-blue rounded-full flex items-center justify-center text-white text-xs font-bold mb-3">2</div>
@@ -264,8 +452,8 @@
           <p class="text-slate-600 text-sm leading-relaxed">We'll assess your home's current market value to determine your available equity and the credit line you qualify for.</p>
         </div>
 
-        <div class="flex flex-col items-center text-center">
-          <div class="relative z-10 w-20 h-20 bg-brand-blue rounded-2xl flex items-center justify-center mb-5 shadow-cta">
+        <div class="flex flex-col items-center text-center reveal reveal-delay-3">
+          <div class="relative z-10 w-20 h-20 bg-brand-blue rounded-2xl flex items-center justify-center mb-5 shadow-cta transition-transform duration-200 hover:-translate-y-1">
             <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
           </div>
           <div class="w-7 h-7 bg-brand-blue rounded-full flex items-center justify-center text-white text-xs font-bold mb-3">3</div>
@@ -273,8 +461,8 @@
           <p class="text-slate-600 text-sm leading-relaxed">Our underwriting team reviews your application and equity. We work efficiently to deliver your approval decision quickly.</p>
         </div>
 
-        <div class="flex flex-col items-center text-center">
-          <div class="relative z-10 w-20 h-20 bg-brand-accent rounded-2xl flex items-center justify-center mb-5 shadow-cta">
+        <div class="flex flex-col items-center text-center reveal reveal-delay-4">
+          <div class="relative z-10 w-20 h-20 bg-brand-accent rounded-2xl flex items-center justify-center mb-5 shadow-cta transition-transform duration-200 hover:-translate-y-1">
             <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
           </div>
           <div class="w-7 h-7 bg-brand-accent rounded-full flex items-center justify-center text-white text-xs font-bold mb-3">4</div>
@@ -283,9 +471,9 @@
         </div>
       </div>
 
-      <div class="text-center mt-12">
+      <div class="text-center mt-12 reveal">
         <a href="https://amerisave.com/apply"
-           class="inline-flex items-center gap-2 bg-brand-blue text-white font-semibold px-8 py-4 rounded-xl hover:bg-brand-light transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 shadow-cta">
+           class="btn-shimmer inline-flex items-center gap-2 bg-brand-blue text-white font-semibold px-8 py-4 rounded-xl hover:bg-brand-light hover:shadow-glow transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 shadow-cta">
           Start My Application
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
         </a>
@@ -293,17 +481,18 @@
     </div>
   </section>
 
-  <!-- ─── SMART USES ─── -->
-  <section class="py-20 bg-brand-navy">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-14">
+  <!-- ── SMART USES ── -->
+  <section class="py-20 bg-brand-navy relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10 pointer-events-none" style="background: radial-gradient(ellipse at 20% 50%, #1A5CB8 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, #0B3D91 0%, transparent 50%);" aria-hidden="true"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14 reveal">
         <p class="text-brand-gold text-sm font-semibold uppercase tracking-widest mb-3">Put Your Equity to Work</p>
         <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Smart Uses for Your HELOC</h2>
         <p class="text-white/70 text-lg max-w-2xl mx-auto leading-relaxed">Homeowners use HELOCs for a wide range of financial goals. Here are some of the most common — and most effective — ways to use your credit line.</p>
       </div>
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        <div class="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors duration-200 cursor-default">
+        <div class="glass-dark rounded-2xl p-6 cursor-default reveal reveal-delay-1">
           <div class="flex items-start gap-4">
             <div class="w-10 h-10 bg-brand-gold/20 rounded-xl flex items-center justify-center flex-shrink-0">
               <svg class="w-5 h-5 text-brand-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
@@ -315,7 +504,7 @@
           </div>
         </div>
 
-        <div class="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors duration-200 cursor-default">
+        <div class="glass-dark rounded-2xl p-6 cursor-default reveal reveal-delay-2">
           <div class="flex items-start gap-4">
             <div class="w-10 h-10 bg-brand-gold/20 rounded-xl flex items-center justify-center flex-shrink-0">
               <svg class="w-5 h-5 text-brand-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
@@ -327,7 +516,7 @@
           </div>
         </div>
 
-        <div class="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors duration-200 cursor-default">
+        <div class="glass-dark rounded-2xl p-6 cursor-default reveal reveal-delay-3">
           <div class="flex items-start gap-4">
             <div class="w-10 h-10 bg-brand-gold/20 rounded-xl flex items-center justify-center flex-shrink-0">
               <svg class="w-5 h-5 text-brand-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
@@ -339,7 +528,7 @@
           </div>
         </div>
 
-        <div class="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors duration-200 cursor-default">
+        <div class="glass-dark rounded-2xl p-6 cursor-default reveal reveal-delay-1">
           <div class="flex items-start gap-4">
             <div class="w-10 h-10 bg-brand-gold/20 rounded-xl flex items-center justify-center flex-shrink-0">
               <svg class="w-5 h-5 text-brand-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
@@ -351,7 +540,7 @@
           </div>
         </div>
 
-        <div class="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors duration-200 cursor-default">
+        <div class="glass-dark rounded-2xl p-6 cursor-default reveal reveal-delay-2">
           <div class="flex items-start gap-4">
             <div class="w-10 h-10 bg-brand-gold/20 rounded-xl flex items-center justify-center flex-shrink-0">
               <svg class="w-5 h-5 text-brand-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
@@ -363,7 +552,7 @@
           </div>
         </div>
 
-        <div class="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors duration-200 cursor-default">
+        <div class="glass-dark rounded-2xl p-6 cursor-default reveal reveal-delay-3">
           <div class="flex items-start gap-4">
             <div class="w-10 h-10 bg-brand-gold/20 rounded-xl flex items-center justify-center flex-shrink-0">
               <svg class="w-5 h-5 text-brand-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
@@ -378,11 +567,11 @@
     </div>
   </section>
 
-  <!-- ─── ELIGIBILITY ─── -->
+  <!-- ── ELIGIBILITY ── -->
   <section class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid lg:grid-cols-2 gap-16 items-start">
-        <div>
+        <div class="reveal">
           <p class="text-brand-blue text-sm font-semibold uppercase tracking-widest mb-3">Do You Qualify?</p>
           <h2 class="text-3xl md:text-4xl font-bold text-brand-navy mb-6">Eligibility Requirements</h2>
           <p class="text-slate-600 text-lg leading-relaxed mb-8">Most homeowners with sufficient equity qualify for a HELOC. Here's what lenders typically evaluate:</p>
@@ -436,9 +625,9 @@
           </ul>
         </div>
 
-        <!-- CTA card -->
-        <div class="lg:sticky lg:top-24">
-          <div class="bg-brand-sky border border-brand-blue/10 rounded-2xl p-8">
+        <!-- CTA glass card -->
+        <div class="lg:sticky lg:top-24 reveal reveal-delay-2">
+          <div class="elg-glass rounded-2xl p-8">
             <h3 class="text-2xl font-bold text-brand-navy mb-3">See If You Qualify</h3>
             <p class="text-slate-600 mb-6 leading-relaxed">Answer a few quick questions to find out how much equity you can access — with no impact to your credit score.</p>
             <ul class="space-y-3 mb-8">
@@ -456,7 +645,7 @@
               </li>
             </ul>
             <a href="https://amerisave.com/apply"
-               class="w-full inline-flex items-center justify-center gap-2 bg-brand-accent text-white font-semibold px-6 py-4 rounded-xl hover:bg-orange-600 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2 shadow-cta">
+               class="btn-shimmer w-full inline-flex items-center justify-center gap-2 bg-brand-accent text-white font-semibold px-6 py-4 rounded-xl hover:bg-orange-600 hover:shadow-glow-accent transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2 shadow-cta">
               Explore My Options
               <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </a>
@@ -467,68 +656,57 @@
     </div>
   </section>
 
-  <!-- ─── COMPARISON TABLE ─── -->
+  <!-- ── COMPARISON TABLE ── -->
   <section id="compare" class="py-20 bg-slate-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-14">
+      <div class="text-center mb-14 reveal">
         <p class="text-brand-blue text-sm font-semibold uppercase tracking-widest mb-3">Know Your Options</p>
         <h2 class="text-3xl md:text-4xl font-bold text-brand-navy mb-4">HELOC vs. Home Equity Loan</h2>
         <p class="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed">Both products let you borrow against your home's equity — but they work differently. Use this comparison to choose the right fit for your goals.</p>
       </div>
 
-      <!-- Desktop table / Mobile cards -->
-      <div class="overflow-x-auto rounded-2xl shadow-card border border-slate-200">
-        <table class="w-full min-w-[640px] border-collapse bg-white" role="table">
+      <div class="overflow-x-auto rounded-2xl shadow-glass border border-white/60 reveal">
+        <table class="w-full min-w-[640px] border-collapse" style="background: rgba(255,255,255,0.75); backdrop-filter: blur(12px);" role="table">
           <thead>
             <tr>
-              <th class="text-left px-6 py-4 bg-white text-slate-500 text-sm font-medium border-b border-slate-100 w-48" scope="col">Feature</th>
+              <th class="text-left px-6 py-4 bg-white/80 text-slate-500 text-sm font-medium border-b border-slate-100 w-48" scope="col">Feature</th>
               <th class="px-6 py-5 bg-brand-blue text-white text-center" scope="col">
                 <span class="block text-xs font-medium uppercase tracking-wider text-blue-200 mb-0.5">Flexible Access</span>
                 <span class="text-lg font-bold">HELOC</span>
               </th>
-              <th class="px-6 py-5 bg-slate-100 text-brand-navy text-center border-b border-slate-200" scope="col">
+              <th class="px-6 py-5 bg-white/90 text-brand-navy text-center border-b border-slate-200" scope="col">
                 <span class="block text-xs font-medium uppercase tracking-wider text-slate-500 mb-0.5">Fixed Lump Sum</span>
                 <span class="text-lg font-bold">Home Equity Loan</span>
               </th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-100">
-            <tr class="hover:bg-slate-50 transition-colors duration-150">
+          <tbody class="divide-y divide-slate-100/80">
+            <tr class="table-row">
               <td class="px-6 py-4 text-sm font-medium text-slate-700">How You Receive Funds</td>
-              <td class="px-6 py-4 text-center">
-                <span class="inline-block bg-brand-sky text-brand-blue text-sm font-medium px-3 py-1 rounded-full">Revolving credit line</span>
-              </td>
+              <td class="px-6 py-4 text-center"><span class="inline-block bg-brand-sky text-brand-blue text-sm font-medium px-3 py-1 rounded-full">Revolving credit line</span></td>
               <td class="px-6 py-4 text-center text-sm text-slate-600">One-time lump sum</td>
             </tr>
-            <tr class="hover:bg-slate-50 transition-colors duration-150">
+            <tr class="table-row">
               <td class="px-6 py-4 text-sm font-medium text-slate-700">Interest Rate Type</td>
-              <td class="px-6 py-4 text-center">
-                <span class="inline-block bg-brand-sky text-brand-blue text-sm font-medium px-3 py-1 rounded-full">Variable rate</span>
-              </td>
+              <td class="px-6 py-4 text-center"><span class="inline-block bg-brand-sky text-brand-blue text-sm font-medium px-3 py-1 rounded-full">Variable rate</span></td>
               <td class="px-6 py-4 text-center text-sm text-slate-600">Fixed rate</td>
             </tr>
-            <tr class="hover:bg-slate-50 transition-colors duration-150">
+            <tr class="table-row">
               <td class="px-6 py-4 text-sm font-medium text-slate-700">Draw Period</td>
-              <td class="px-6 py-4 text-center">
-                <span class="inline-block bg-brand-sky text-brand-blue text-sm font-medium px-3 py-1 rounded-full">Up to 10 years</span>
-              </td>
+              <td class="px-6 py-4 text-center"><span class="inline-block bg-brand-sky text-brand-blue text-sm font-medium px-3 py-1 rounded-full">Up to 10 years</span></td>
               <td class="px-6 py-4 text-center text-sm text-slate-600">None — funds disbursed immediately</td>
             </tr>
-            <tr class="hover:bg-slate-50 transition-colors duration-150">
+            <tr class="table-row">
               <td class="px-6 py-4 text-sm font-medium text-slate-700">Repayment Period</td>
-              <td class="px-6 py-4 text-center">
-                <span class="inline-block bg-brand-sky text-brand-blue text-sm font-medium px-3 py-1 rounded-full">Up to 20 years</span>
-              </td>
+              <td class="px-6 py-4 text-center"><span class="inline-block bg-brand-sky text-brand-blue text-sm font-medium px-3 py-1 rounded-full">Up to 20 years</span></td>
               <td class="px-6 py-4 text-center text-sm text-slate-600">Fixed term (5–30 years)</td>
             </tr>
-            <tr class="hover:bg-slate-50 transition-colors duration-150">
+            <tr class="table-row">
               <td class="px-6 py-4 text-sm font-medium text-slate-700">Monthly Payment</td>
-              <td class="px-6 py-4 text-center">
-                <span class="inline-block bg-brand-sky text-brand-blue text-sm font-medium px-3 py-1 rounded-full">Interest-only during draw</span>
-              </td>
+              <td class="px-6 py-4 text-center"><span class="inline-block bg-brand-sky text-brand-blue text-sm font-medium px-3 py-1 rounded-full">Interest-only during draw</span></td>
               <td class="px-6 py-4 text-center text-sm text-slate-600">Principal + interest from day one</td>
             </tr>
-            <tr class="hover:bg-slate-50 transition-colors duration-150">
+            <tr class="table-row">
               <td class="px-6 py-4 text-sm font-medium text-slate-700">Flexibility</td>
               <td class="px-6 py-4 text-center">
                 <div class="flex items-center justify-center gap-1.5">
@@ -538,18 +716,14 @@
               </td>
               <td class="px-6 py-4 text-center text-sm text-slate-600">Low — fixed amount upfront</td>
             </tr>
-            <tr class="hover:bg-slate-50 transition-colors duration-150">
+            <tr class="table-row">
               <td class="px-6 py-4 text-sm font-medium text-slate-700">Best For</td>
-              <td class="px-6 py-4 text-center">
-                <span class="inline-block bg-brand-sky text-brand-blue text-sm font-medium px-3 py-1 rounded-full">Ongoing or uncertain expenses</span>
-              </td>
+              <td class="px-6 py-4 text-center"><span class="inline-block bg-brand-sky text-brand-blue text-sm font-medium px-3 py-1 rounded-full">Ongoing or uncertain expenses</span></td>
               <td class="px-6 py-4 text-center text-sm text-slate-600">One-time, known expenses</td>
             </tr>
-            <tr class="hover:bg-slate-50 transition-colors duration-150">
+            <tr class="table-row">
               <td class="px-6 py-4 text-sm font-medium text-slate-700">Closing Costs</td>
-              <td class="px-6 py-4 text-center">
-                <span class="inline-block bg-brand-sky text-brand-blue text-sm font-medium px-3 py-1 rounded-full">Generally lower</span>
-              </td>
+              <td class="px-6 py-4 text-center"><span class="inline-block bg-brand-sky text-brand-blue text-sm font-medium px-3 py-1 rounded-full">Generally lower</span></td>
               <td class="px-6 py-4 text-center text-sm text-slate-600">Similar to mortgage costs</td>
             </tr>
           </tbody>
@@ -558,18 +732,18 @@
     </div>
   </section>
 
-  <!-- ─── PROS & CONS ─── -->
+  <!-- ── PROS & CONS ── -->
   <section class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-14">
+      <div class="text-center mb-14 reveal">
         <p class="text-brand-blue text-sm font-semibold uppercase tracking-widest mb-3">Balanced View</p>
-        <h2 class="text-3xl md:text-4xl font-bold text-brand-navy mb-4">HELOC Pros & Cons</h2>
+        <h2 class="text-3xl md:text-4xl font-bold text-brand-navy mb-4">HELOC Pros &amp; Cons</h2>
         <p class="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed">We believe in transparency. Here's an honest look at the advantages and considerations of a HELOC so you can make an informed decision.</p>
       </div>
 
       <div class="grid md:grid-cols-2 gap-8">
         <!-- Pros -->
-        <div class="bg-gradient-to-br from-emerald-50 to-white border border-emerald-100 rounded-2xl p-8">
+        <div class="scale-card glass-card rounded-2xl p-8 reveal reveal-delay-1" style="background: linear-gradient(135deg, rgba(209,250,229,0.5) 0%, rgba(255,255,255,0.8) 100%); border-color: rgba(52,211,153,0.2);">
           <div class="flex items-center gap-3 mb-6">
             <div class="w-10 h-10 bg-brand-success rounded-xl flex items-center justify-center">
               <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -579,44 +753,29 @@
           <ul class="space-y-4" role="list">
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-brand-success flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <div>
-                <span class="font-medium text-slate-800">Flexible borrowing</span>
-                <p class="text-slate-600 text-sm mt-0.5">Draw funds as needed rather than all at once — pay interest only on what you actually use.</p>
-              </div>
+              <div><span class="font-medium text-slate-800">Flexible borrowing</span><p class="text-slate-600 text-sm mt-0.5">Draw funds as needed rather than all at once — pay interest only on what you actually use.</p></div>
             </li>
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-brand-success flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <div>
-                <span class="font-medium text-slate-800">Lower initial rates</span>
-                <p class="text-slate-600 text-sm mt-0.5">Variable rates are typically lower than fixed home equity loans and significantly lower than credit cards.</p>
-              </div>
+              <div><span class="font-medium text-slate-800">Lower initial rates</span><p class="text-slate-600 text-sm mt-0.5">Variable rates are typically lower than fixed home equity loans and significantly lower than credit cards.</p></div>
             </li>
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-brand-success flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <div>
-                <span class="font-medium text-slate-800">Interest-only payment option</span>
-                <p class="text-slate-600 text-sm mt-0.5">During the 10-year draw period, you may have the option to make interest-only payments, reducing cash flow pressure.</p>
-              </div>
+              <div><span class="font-medium text-slate-800">Interest-only payment option</span><p class="text-slate-600 text-sm mt-0.5">During the 10-year draw period, you may have the option to make interest-only payments, reducing cash flow pressure.</p></div>
             </li>
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-brand-success flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <div>
-                <span class="font-medium text-slate-800">Potential tax deductibility</span>
-                <p class="text-slate-600 text-sm mt-0.5">Interest may be tax-deductible if funds are used to improve your home. Consult your tax advisor.</p>
-              </div>
+              <div><span class="font-medium text-slate-800">Potential tax deductibility</span><p class="text-slate-600 text-sm mt-0.5">Interest may be tax-deductible if funds are used to improve your home. Consult your tax advisor.</p></div>
             </li>
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-brand-success flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <div>
-                <span class="font-medium text-slate-800">Reusable credit line</span>
-                <p class="text-slate-600 text-sm mt-0.5">As you repay, the credit becomes available again — similar to a credit card, but backed by your home's equity.</p>
-              </div>
+              <div><span class="font-medium text-slate-800">Reusable credit line</span><p class="text-slate-600 text-sm mt-0.5">As you repay, the credit becomes available again — similar to a credit card, but backed by your home's equity.</p></div>
             </li>
           </ul>
         </div>
 
         <!-- Cons -->
-        <div class="bg-gradient-to-br from-amber-50 to-white border border-amber-100 rounded-2xl p-8">
+        <div class="scale-card glass-card rounded-2xl p-8 reveal reveal-delay-2" style="background: linear-gradient(135deg, rgba(254,243,199,0.5) 0%, rgba(255,255,255,0.8) 100%); border-color: rgba(251,191,36,0.2);">
           <div class="flex items-center gap-3 mb-6">
             <div class="w-10 h-10 bg-amber-500 rounded-xl flex items-center justify-center">
               <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
@@ -626,38 +785,23 @@
           <ul class="space-y-4" role="list">
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01"/></svg>
-              <div>
-                <span class="font-medium text-slate-800">Variable interest rates</span>
-                <p class="text-slate-600 text-sm mt-0.5">Rates can rise over time as market conditions change, which may increase your monthly payments.</p>
-              </div>
+              <div><span class="font-medium text-slate-800">Variable interest rates</span><p class="text-slate-600 text-sm mt-0.5">Rates can rise over time as market conditions change, which may increase your monthly payments.</p></div>
             </li>
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01"/></svg>
-              <div>
-                <span class="font-medium text-slate-800">Home is used as collateral</span>
-                <p class="text-slate-600 text-sm mt-0.5">Failure to repay puts your home at risk of foreclosure. Borrow responsibly within your means.</p>
-              </div>
+              <div><span class="font-medium text-slate-800">Home is used as collateral</span><p class="text-slate-600 text-sm mt-0.5">Failure to repay puts your home at risk of foreclosure. Borrow responsibly within your means.</p></div>
             </li>
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01"/></svg>
-              <div>
-                <span class="font-medium text-slate-800">Payment increase after draw period</span>
-                <p class="text-slate-600 text-sm mt-0.5">Once the draw period ends, you enter repayment and must pay both principal and interest, which increases monthly payments.</p>
-              </div>
+              <div><span class="font-medium text-slate-800">Payment increase after draw period</span><p class="text-slate-600 text-sm mt-0.5">Once the draw period ends, you enter repayment and must pay both principal and interest, which increases monthly payments.</p></div>
             </li>
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01"/></svg>
-              <div>
-                <span class="font-medium text-slate-800">Lender may freeze or reduce line</span>
-                <p class="text-slate-600 text-sm mt-0.5">In some market conditions, lenders can reduce your available credit line — potentially limiting your access to funds.</p>
-              </div>
+              <div><span class="font-medium text-slate-800">Lender may freeze or reduce line</span><p class="text-slate-600 text-sm mt-0.5">In some market conditions, lenders can reduce your available credit line — potentially limiting your access to funds.</p></div>
             </li>
             <li class="flex items-start gap-3">
               <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01"/></svg>
-              <div>
-                <span class="font-medium text-slate-800">Closing costs and fees</span>
-                <p class="text-slate-600 text-sm mt-0.5">Like any mortgage product, a HELOC involves closing costs, appraisal fees, and potentially annual fees.</p>
-              </div>
+              <div><span class="font-medium text-slate-800">Closing costs and fees</span><p class="text-slate-600 text-sm mt-0.5">Like any mortgage product, a HELOC involves closing costs, appraisal fees, and potentially annual fees.</p></div>
             </li>
           </ul>
         </div>
@@ -665,13 +809,14 @@
     </div>
   </section>
 
-  <!-- ─── MID-PAGE CTA BANNER ─── -->
-  <section class="py-16 bg-gradient-to-r from-brand-navy via-brand-blue to-brand-light">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+  <!-- ── MID-PAGE CTA BANNER ── -->
+  <section class="py-16 bg-gradient-to-r from-brand-navy via-brand-blue to-brand-light relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10" style="background: radial-gradient(ellipse at 50% 120%, rgba(255,107,43,0.4) 0%, transparent 60%);" aria-hidden="true"></div>
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
       <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Put Your Equity to Work?</h2>
       <p class="text-white/80 text-lg mb-8 max-w-2xl mx-auto">See personalized HELOC options for your home in minutes — no commitment required, no impact to your credit score.</p>
       <a href="https://amerisave.com/apply"
-         class="inline-flex items-center gap-3 bg-brand-accent text-white text-xl font-bold px-10 py-5 rounded-2xl hover:bg-orange-600 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2 focus:ring-offset-brand-navy shadow-cta">
+         class="btn-shimmer inline-flex items-center gap-3 bg-brand-accent text-white text-xl font-bold px-10 py-5 rounded-2xl hover:bg-orange-600 hover:shadow-glow-accent transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2 focus:ring-offset-brand-navy shadow-cta">
         Explore My Options
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
       </a>
@@ -679,18 +824,17 @@
     </div>
   </section>
 
-  <!-- ─── FAQ ─── -->
+  <!-- ── FAQ ── -->
   <section id="faq" class="py-20 bg-white">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-14">
+      <div class="text-center mb-14 reveal">
         <p class="text-brand-blue text-sm font-semibold uppercase tracking-widest mb-3">Got Questions?</p>
         <h2 class="text-3xl md:text-4xl font-bold text-brand-navy mb-4">Frequently Asked Questions</h2>
         <p class="text-slate-600 text-lg leading-relaxed">Everything you need to know about HELOCs — answered clearly.</p>
       </div>
 
-      <div class="space-y-4" role="list">
-        <!-- FAQ items using details/summary for accessibility with no JS -->
-        <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/30 transition-colors duration-200">
+      <div class="space-y-3 reveal">
+        <details class="group border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/40 transition-colors duration-200" style="background: rgba(255,255,255,0.8); backdrop-filter: blur(8px);">
           <summary class="flex items-center justify-between px-6 py-5 font-semibold text-brand-navy list-none cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-inset">
             What is a HELOC and how does it work?
             <svg class="w-5 h-5 text-brand-blue flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -700,7 +844,7 @@
           </div>
         </details>
 
-        <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/30 transition-colors duration-200">
+        <details class="group border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/40 transition-colors duration-200" style="background: rgba(255,255,255,0.8); backdrop-filter: blur(8px);">
           <summary class="flex items-center justify-between px-6 py-5 font-semibold text-brand-navy list-none cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-inset">
             How much can I borrow with a HELOC?
             <svg class="w-5 h-5 text-brand-blue flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -710,7 +854,7 @@
           </div>
         </details>
 
-        <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/30 transition-colors duration-200">
+        <details class="group border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/40 transition-colors duration-200" style="background: rgba(255,255,255,0.8); backdrop-filter: blur(8px);">
           <summary class="flex items-center justify-between px-6 py-5 font-semibold text-brand-navy list-none cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-inset">
             What is the difference between the draw period and repayment period?
             <svg class="w-5 h-5 text-brand-blue flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -720,7 +864,7 @@
           </div>
         </details>
 
-        <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/30 transition-colors duration-200">
+        <details class="group border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/40 transition-colors duration-200" style="background: rgba(255,255,255,0.8); backdrop-filter: blur(8px);">
           <summary class="flex items-center justify-between px-6 py-5 font-semibold text-brand-navy list-none cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-inset">
             Are HELOC interest rates fixed or variable?
             <svg class="w-5 h-5 text-brand-blue flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -730,7 +874,7 @@
           </div>
         </details>
 
-        <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/30 transition-colors duration-200">
+        <details class="group border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/40 transition-colors duration-200" style="background: rgba(255,255,255,0.8); backdrop-filter: blur(8px);">
           <summary class="flex items-center justify-between px-6 py-5 font-semibold text-brand-navy list-none cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-inset">
             Will a HELOC application affect my credit score?
             <svg class="w-5 h-5 text-brand-blue flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -740,7 +884,7 @@
           </div>
         </details>
 
-        <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/30 transition-colors duration-200">
+        <details class="group border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/40 transition-colors duration-200" style="background: rgba(255,255,255,0.8); backdrop-filter: blur(8px);">
           <summary class="flex items-center justify-between px-6 py-5 font-semibold text-brand-navy list-none cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-inset">
             Can I pay off my HELOC early?
             <svg class="w-5 h-5 text-brand-blue flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -750,7 +894,7 @@
           </div>
         </details>
 
-        <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/30 transition-colors duration-200">
+        <details class="group border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/40 transition-colors duration-200" style="background: rgba(255,255,255,0.8); backdrop-filter: blur(8px);">
           <summary class="flex items-center justify-between px-6 py-5 font-semibold text-brand-navy list-none cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-inset">
             Is the interest on a HELOC tax deductible?
             <svg class="w-5 h-5 text-brand-blue flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -760,7 +904,7 @@
           </div>
         </details>
 
-        <details class="group bg-white border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/30 transition-colors duration-200">
+        <details class="group border border-slate-200 rounded-xl overflow-hidden cursor-pointer hover:border-brand-blue/40 transition-colors duration-200" style="background: rgba(255,255,255,0.8); backdrop-filter: blur(8px);">
           <summary class="flex items-center justify-between px-6 py-5 font-semibold text-brand-navy list-none cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-inset">
             How long does it take to get a HELOC with AmeriSave?
             <svg class="w-5 h-5 text-brand-blue flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -773,9 +917,9 @@
     </div>
   </section>
 
-  <!-- ─── BOTTOM CTA ─── -->
+  <!-- ── BOTTOM CTA ── -->
   <section class="py-20 bg-brand-sky border-t border-brand-blue/10">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
       <div class="inline-flex items-center gap-2 bg-brand-blue/10 rounded-full px-4 py-1.5 text-brand-blue text-xs font-semibold uppercase tracking-wider mb-6">
         <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
         Secure &amp; No-Obligation
@@ -783,7 +927,7 @@
       <h2 class="text-3xl md:text-4xl font-bold text-brand-navy mb-4">Your Equity. Your Opportunity.</h2>
       <p class="text-slate-600 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">AmeriSave has helped over 1 million Americans achieve their financial goals. Let us help you put your home's equity to work — with the transparency and support you deserve.</p>
       <a href="https://amerisave.com/apply"
-         class="inline-flex items-center gap-3 bg-brand-accent text-white text-xl font-bold px-12 py-5 rounded-2xl hover:bg-orange-600 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2 shadow-cta">
+         class="btn-shimmer inline-flex items-center gap-3 bg-brand-accent text-white text-xl font-bold px-12 py-5 rounded-2xl hover:bg-orange-600 hover:shadow-glow-accent transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2 shadow-cta">
         Explore My Options
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
       </a>
@@ -798,7 +942,7 @@
         </div>
         <div class="flex items-center gap-2 text-slate-500 text-sm">
           <svg class="w-4 h-4 text-brand-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-          1M+ Customers Served
+          <span><span class="stat-num" data-target="1000000" data-suffix="+" data-display="1M+">1M+</span> Customers Served</span>
         </div>
         <div class="flex items-center gap-2 text-slate-500 text-sm">
           <svg class="w-4 h-4 text-brand-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
@@ -808,7 +952,7 @@
     </div>
   </section>
 
-  <!-- ─── FOOTER ─── -->
+  <!-- ── FOOTER ── -->
   <footer class="bg-brand-navy text-white/60 py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8">
@@ -836,5 +980,89 @@
     </div>
   </footer>
 
+  <!-- ── JAVASCRIPT ── -->
+  <script>
+    (function () {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* ── Scroll progress bar ── */
+      const bar = document.getElementById('scroll-progress');
+      function updateProgress() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        bar.style.width = pct + '%';
+        bar.setAttribute('aria-valuenow', Math.round(pct));
+      }
+      window.addEventListener('scroll', updateProgress, { passive: true });
+
+      /* ── Parallax hero ── */
+      if (!prefersReducedMotion) {
+        const heroEl = document.querySelector('.parallax-hero');
+        if (heroEl) {
+          window.addEventListener('scroll', function () {
+            const scrolled = window.scrollY;
+            heroEl.style.transform = 'translateY(' + (scrolled * 0.25) + 'px)';
+          }, { passive: true });
+        }
+      }
+
+      /* ── Scroll-reveal via IntersectionObserver ── */
+      const reveals = document.querySelectorAll('.reveal');
+      if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+        const revealObs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in-view');
+              revealObs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        reveals.forEach(function (el) { revealObs.observe(el); });
+      } else {
+        reveals.forEach(function (el) { el.classList.add('in-view'); });
+      }
+
+      /* ── Count-up animation ── */
+      function formatNumber(val, prefix, suffix, display) {
+        if (display) return display; // use display override for special values like "1M+"
+        if (val >= 1000000) return prefix + Math.round(val / 1000000) + 'M' + suffix;
+        if (val >= 1000)    return prefix + Math.round(val / 1000) + 'K' + suffix;
+        return prefix + Math.round(val) + suffix;
+      }
+
+      function animateCounter(el) {
+        const target  = parseFloat(el.dataset.target) || 0;
+        const prefix  = el.dataset.prefix  || '';
+        const suffix  = el.dataset.suffix  || '';
+        const display = el.dataset.display || '';
+        const duration = 1400;
+        const start    = performance.now();
+
+        function step(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+          const current = target * eased;
+          el.textContent = formatNumber(current, prefix, suffix, progress < 1 ? '' : display);
+          if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+
+      const statEls = document.querySelectorAll('.stat-num');
+      if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+        const statObs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              animateCounter(entry.target);
+              statObs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.5 });
+        statEls.forEach(function (el) { statObs.observe(el); });
+      }
+    })();
+  </script>
 </body>
 </html>
